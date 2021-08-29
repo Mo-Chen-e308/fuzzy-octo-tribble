@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.1.3",
+	num: "0.0.1.7",
 	name: "",
 }
 
@@ -54,7 +54,12 @@ let changelog = `<h1>更新日志:</h1><br>
 		- 修复了3Q点买Q11会不生产QwQ的bug<br>
 	<h2>v0.0.1.3</h2><br>
 		- 不要问我v0.0.1.2去哪了<br>
-		- 修复了很多很多bug
+		- 修复了很多很多bug<br>
+	<h2>v0.0.1.7</h2><br>
+		- 不要问我v0.0.1.4~v0.0.1.6去哪了<br>
+		- T节点更新了好多里程碑<br>
+		- T节点更新了T13~T23升级<br>
+		- 新增W节点框架<br>
 		
 		
 		
@@ -121,6 +126,9 @@ function getPointGen() {
 			//if (hasUpgrade('Q',21)) eff = player[this.layer].points.add(1).pow(0.4805);
 			if (hasUpgrade('T',11)) eff = eff.mul((a**0.3)+1)
 			if (hasUpgrade('T',12)) eff = eff.mul((a**0.075)+1)
+			if (hasUpgrade('T',13)) eff = eff.mul((a**0.185)+1)
+			if (hasUpgrade('T',15)) eff = eff.mul((a**0.215)+1)
+			//if (hasUpgrade('T',14)) eff = eff.mul((a**0.15)+1)
 			
 			
 		return eff

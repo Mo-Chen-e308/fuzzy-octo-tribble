@@ -15,22 +15,58 @@ addLayer("T", { //次于Q节点 1层
     exponent: 0.5, 
 	branches: ["Q"],
     gainMult() {
-        mult = new ExpantaNum(1)
-        return mult
+        //mult = new ExpantaNum(1)
+			var eff = player[this.layer].points.add(1).pow(0) 
+				var b = player.Q.points
+				var a = player.T.points
+					if (hasUpgrade('T',14)) eff = eff.mul((a**0.15)+1);
+					if (hasUpgrade('T',23)) eff = eff.mul((a**0.2)+1);
+					
+			return eff
+        //return mult
     },
     gainExp() { 
         return new ExpantaNum(1)
     },
     row: 1, 
 	hotkeys: [
-        {key: "T", description: "T: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "t", description: "t: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 	layerShown(){return player[this.layer].unlocked || (hasUpgrade("Q",23))},
 	
 //////////////////////////////////////////////////////////////////////
+    //passiveGeneration(){
+       //if(hasUpgrade("T",)) return 1
+        //if(hasMilestone("a",21)) return 1
+       //if(hasMilestone("a",20) || (hasMilestone("a",33) && player.a.upgrades.length > 0)) return 0.1
+       // return 0
+   // },
+   //////////////////////////////////////////////
+   doReset(resettingLayer) {
+        let keep = [];
+			//if (hasMilestone("T", 1)) keep.push("upgrades");
+				//if (resettingLayer=="T") keep.push("best","total","milestones","upgrades");
+				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+					var a = hasMilestone('T',6)
+					//var b = hasMilestone('T',2)
+					//var c = hasMilestone('T',3)
+					//var d = hasMilestone('T',4)
+					//var c = player.Q.points = new ExpantaNum(3)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer, keep)
+		if(a) player.T.upgrades = [0,1,6];
+		//if(b) player.Q.upgrades = [11,12,13,14,15];
+		//if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
+		//if(d) player.Q.points = new ExpantaNum(10)
+																};
+		
+		
+		},
+	//////////////////////////////////////////////////////////////////////////////////
 			upgrades:{
 				11:{
-				title:"加成！",
+				title:"加成？",
 				description:"T点倍增<br>QwQ获取",
 				cost:new ExpantaNum(1),
 				effect(){
@@ -38,14 +74,68 @@ addLayer("T", { //次于Q节点 1层
 						var a = player.T.points
 							if (hasUpgrade('T',11)) eff = eff.mul((a**0.3)+1)
 							if (hasUpgrade('T',12)) eff = eff.mul((a**0.075)+1)
+							if (hasUpgrade('T',13)) eff = eff.mul((a**0.185)+1)
+							if (hasUpgrade('T',15)) eff = eff.mul((a**0.215)+1)
 						return eff
 					},
 				   effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
 			       },
 				12:{
-				title:"加成！",
+				title:"真的？",
 				description:"改善T11的加成",
 				cost:new ExpantaNum(3),
+				unlocked(){return hasUpgrade("T",11)},
+			       },
+				13:{
+				title:"好东西？",
+				description:"再次改善<br>T11的加成",
+				unlocked(){return hasUpgrade("T",12)},
+				cost:new ExpantaNum(9),
+			       },
+				14:{
+				title:"这有用吗？",
+				description:"根据T点<br>倍增T点获得",
+				cost:new ExpantaNum(27),
+				unlocked(){return hasUpgrade("T",13)},
+				effect(){
+						var eff = player.T.points.pow(0)
+							var b = player.Q.points
+							var a = player.T.points
+							if (hasUpgrade('T',14)) eff = eff.mul((a**0.15)+1);
+							if (hasUpgrade('T',23)) eff = eff.mul((a**0.2)+1);
+						return eff
+					},
+				   effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+			       },
+				15:{
+				title:"这是什么？",
+				description:"改善T11的加成",
+				cost:new ExpantaNum(81),
+				unlocked(){return hasUpgrade("T",14)},
+			       },
+				21:{
+				title:"这个好！",
+				description:"每秒获得0.5%<br>的可以重置的Q点",
+				cost:new ExpantaNum(243),
+				unlocked(){return hasUpgrade("T",15)},
+			       },
+				22:{
+				title:"这个也好！",
+				description:"每秒获得1.5%<br>的可以重置的Q点",
+				cost:new ExpantaNum(486),
+				unlocked(){return hasUpgrade("T",21)},
+					},
+				23:{
+				title:"这个还好！",
+				description:"改善T14的效果",
+				cost:new ExpantaNum(972),
+				unlocked(){return hasUpgrade("T",21)},
+			       },
+				31:{
+				title:"这个更好！",
+				description:"每秒.....<br>别想了,这是开W节点的",
+				cost:new ExpantaNum(2916),
+				unlocked(){return hasUpgrade("T",22)},
 			       },
 			},
 
@@ -72,6 +162,31 @@ addLayer("T", { //次于Q节点 1层
 			effectDescription: "保留Q节点第一排升级",
 		done() {
 			return player.T.points.gte(6)},
+				},
+		3: {
+			requirementDescription: "25 T点",
+			effectDescription: "保留Q节点全部升级",
+		done() {
+			return player.T.points.gte(25)},
+				},
+		4: {
+			requirementDescription: "50 T点",
+			effectDescription: "重置时以10Q点开始",
+		done() {
+			return player.T.points.gte(50)},
+				},
+		5: {
+			requirementDescription: "1000 T点",
+			effectDescription: "每秒获得5%的Q点",
+			unlocked(){return hasUpgrade("T",22)},
+		done() {
+			return player.T.points.gte(1000)},
+				},
+		6: {
+			requirementDescription: "8000 T点",
+			effectDescription: "重置时保留T里程碑 1 2<br>也保留本里程碑",
+		done() {
+			return player.T.points.gte(8000)},
 				},
 	},
 				/*challenges: {
@@ -100,7 +215,7 @@ addLayer("W", { //次于T节点 2层
 		points: new ExpantaNum(0),
     }},
     color: "#97CBFF",
-    requires: new ExpantaNum(100000),
+    requires: new ExpantaNum(10000),
     resource: "W点", 
     baseResource: "T点", 
     baseAmount() {return player.T.points}, 
@@ -116,9 +231,9 @@ addLayer("W", { //次于T节点 2层
     },
     row: 2, 
 	hotkeys: [
-        {key: "W", description: "W: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "w", description: "w: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",23))},
+	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31))},
 })
 addLayer("Q", { //主节点    0层
     name: "QwQ", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -145,6 +260,17 @@ addLayer("Q", { //主节点    0层
 			//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
 			//if (layers[resettingLayer].row > this.row) layerDataReset("$", keep)
 			//						},
+		 //if(hasMilestone("a",21)) return 1  1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
+       //if(hasMilestone("a",20) || (hasMilestone("a",33) && player.a.upgrades.length > 0)) return 0.1
+	   //1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
+		  passiveGeneration(){
+        if(hasUpgrade("T",21)) return 0.005
+		if(hasUpgrade("T",22)) return 0.015
+		if(hasMilestone("T",5)) return 0.05
+       
+        return 0
+    },
+	////////////////////////////////////////////////////////////////////////////
     gainMult() { // Calculate the multiplier for main currency from bonuses
         //mult = new ExpantaNum(1)
 			var eff = player[this.layer].points.add(1).pow(0) 
@@ -205,11 +331,19 @@ doReset(resettingLayer) {
 				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
 					var a = hasMilestone('T',1)
 					var b = hasMilestone('T',2)
+					var c = hasMilestone('T',3)
+					var d = hasMilestone('T',4)
 					//var c = player.Q.points = new ExpantaNum(3)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer, keep)
 		if(a) player.Q.upgrades = [11,12,13];
-		if(b) player.Q.upgrades = [11,12,13,14,15]};
+		if(b) player.Q.upgrades = [11,12,13,14,15];
+		if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
+		if(d) player.Q.points = new ExpantaNum(10)};
+		
+		
+		},
+		
 			//if (hasUpgrade('Q',11)) player.Q.upgrades = [11]
 			
             //player.Q.upgrades = [11,12,13]
@@ -220,7 +354,7 @@ doReset(resettingLayer) {
         
 		
 		
-    },
+    
 ///////////////////////////////////////////////////////////////////////
 	upgrades:{
 				11:{
@@ -364,7 +498,7 @@ doReset(resettingLayer) {
 			},
 	},
 	 hotkeys: [
-        {key: "Q", description: "Q: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "q", description: "q: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 		////
 })
