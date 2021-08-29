@@ -35,8 +35,9 @@ addLayer("T", { //次于Q节点 1层
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.Q.points.add(1).pow(0) 
-							if (hasUpgrade('T',11)) eff = player.Q.points.add(1).pow(0.2);
-							if (hasUpgrade('T',12)) eff = player.Q.points.add(1).pow(0.3);
+						var a = player.T.points
+							if (hasUpgrade('T',11)) eff = eff = eff.mul(a**0.3)
+							if (hasUpgrade('T',12)) eff = eff = eff.mul(a**0.075)
 						return eff
 					},
 				   effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -145,17 +146,18 @@ addLayer("Q", { //主节点    0层
 			//if (layers[resettingLayer].row > this.row) layerDataReset("$", keep)
 			//						},
     gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new ExpantaNum(1)
+        //mult = new ExpantaNum(1)
 			var eff = player[this.layer].points.pow(0)
-			var a = player.Q.points
-			var b = player.T.points
-				if (hasUpgrade('Q',14)) eff = player.Q.points.add(1).pow(0.15);
-				if (hasUpgrade('T',11)) eff = player.Q.points.add(1).pow(0.2);
-				if (hasUpgrade('T',12)) eff = player.Q.points.add(1).pow(0.3);
+			var b = player.Q.points
+			var a = player.T.points
+				if (hasUpgrade('Q',14)) eff = eff = eff.mul(b**0.135);
+				//if (hasUpgrade('T',11)) eff = eff = eff.mul(b^0.025)
+				//if (hasUpgrade('T',12)) eff = eff = eff.mul(b^0.035)
 				
-				//if (hasUpgrade('Q',14)) mult = mult.mul(upgradeEffect("Q",14))
+				
+				
 			return eff
-        return mult
+        //return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new ExpantaNum(1)
@@ -203,12 +205,18 @@ doReset(resettingLayer) {
 				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
 					var a = hasMilestone('T',1)
 					var b = hasMilestone('T',2)
+					//var c = player.Q.points = new ExpantaNum(3)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer, keep)
 		if(a) player.Q.upgrades = [11,12,13];
 		if(b) player.Q.upgrades = [11,12,13,14,15]};
 			//if (hasUpgrade('Q',11)) player.Q.upgrades = [11]
+			
             //player.Q.upgrades = [11,12,13]
+			//var c = player.Q.points = new ExpantaNum(2)
+			//if (layers[resettingLayer].row = this.row) {
+          //  layerDataReset(this.layer, keep)
+			//if(c) player.Q.points = new ExpantaNum(1)};
         
 		
 		
@@ -221,10 +229,20 @@ doReset(resettingLayer) {
 				cost:new ExpantaNum(3),
 					effect(){
 						let eff = player[this.layer].points.add(1).pow(0) 
-							if (hasUpgrade('Q',11)) eff = player[this.layer].points.add(1).pow(0.2265);
-							if (hasUpgrade('Q',12)) eff = player[this.layer].points.add(1).pow(0.3375);
-							if (hasUpgrade('Q',13)) eff = player[this.layer].points.add(1).pow(0.4485);
-							if (hasUpgrade('Q',15)) eff = player[this.layer].points.add(1).pow(0.4695);
+							var b = player.Q.points
+							
+							if (hasUpgrade('Q',11)&&(player.Q.points == new ExpantaNum(0))) player.Q.points = new ExpantaNum(1)
+					
+		
+							if (hasUpgrade('Q',11)) eff = eff.mul(b**0.3)
+							if (hasUpgrade('Q',12)) eff = eff.mul(b**0.085)
+							if (hasUpgrade('Q',13)) eff = eff.mul(b**0.09)
+							if (hasUpgrade('Q',15)) eff = eff.mul(b**0.095)
+							if (hasUpgrade('Q',21)) eff = eff.mul(b**0.1)
+
+
+							//if (hasUpgrade('T',11)) eff = player[this.layer].points.add(1).pow(0.2);
+							//if (hasUpgrade('T',12)) eff = player[this.layer].points.add(1).pow(0.3);
 							
 						return eff
 					},
@@ -233,25 +251,24 @@ doReset(resettingLayer) {
 				12:{
 				title:"加成！",
 				description:"改善Q11的加成<br>注：这是有加成的<br>直接在Q11上显示",
-				cost:new ExpantaNum(16),
+				cost:new ExpantaNum(12),
 				unlocked(){return hasUpgrade("Q",11)},
 				},
 				13:{
 				title:"起飞了？",
 				description:"再改善Q11的加成<br>注：同Q12",
-				cost:new ExpantaNum(48),
+				cost:new ExpantaNum(36),
 				unlocked(){return hasUpgrade("Q",12)},
 			       },
 				14:{
 				title:"起飞了！",
 				description:"根据Q点倍增<br>获取Q点的数量<br>(效果可以看成÷)",
-				cost:new ExpantaNum(96),//96
+				cost:new ExpantaNum(72),//96
 				unlocked(){return hasUpgrade("Q",13)},
 					effect(){
 						var eff = player.points.pow(0)
-						var a = player.Q.points
-							if (hasUpgrade('Q',14)) eff = player.Q.points.add(1).pow(a^0.15);
-							if (hasUpgrade('T',11)) eff = player.Q.points.add(1).pow(0.2);
+						var b = player.Q.points
+							if (hasUpgrade('Q',14)) eff = eff = eff.mul(b**0.135);
 						return eff
 							},
 						effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -334,6 +351,12 @@ doReset(resettingLayer) {
 		0: {
 			requirementDescription: "1 Q点",
 			effectDescription: "您获得了第一个Q点",
+			effect(){
+						var eff = player.points.pow(0)
+						var b = player.Q.points
+		
+							if (hasMilestone('Q',0)) eff = eff = eff.mul(b**0.001)
+			return eff},
 		done() {
 			return player.Q.points.gte(1)},
 			
