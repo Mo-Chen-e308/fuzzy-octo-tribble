@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.1.1",
+	num: "0.0.1.3",
 	name: "",
 }
 
@@ -52,6 +52,9 @@ let changelog = `<h1>更新日志:</h1><br>
 	<h2>v0.0.1.1</h2><br>
 		- 修复好多好多好多好多bug<br>
 		- 修复了3Q点买Q11会不生产QwQ的bug<br>
+	<h2>v0.0.1.3</h2><br>
+		- 不要问我v0.0.1.2去哪了<br>
+		- 修复了很多很多bug
 		
 		
 		
