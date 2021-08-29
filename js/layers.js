@@ -150,7 +150,7 @@ addLayer("Q", { //主节点    0层
 			var eff = player[this.layer].points.add(1).pow(0) 
 			var b = player.Q.points
 			var a = player.T.points
-				if (hasUpgrade('Q',14)) eff = eff = eff.mul(b**0.135);
+				if (hasUpgrade('Q',14)) eff = eff.mul((b**0.135)+1);
 				//if (hasUpgrade('T',11)) eff = eff = eff.mul(b^0.025)
 				//if (hasUpgrade('T',12)) eff = eff = eff.mul(b^0.035)
 				
@@ -269,7 +269,7 @@ doReset(resettingLayer) {
 					effect(){
 						var eff = player.points.pow(0)
 							var b = player.Q.points
-							if (hasUpgrade('Q',14)) eff = eff.mul((b**0.135)+0.01);
+							if (hasUpgrade('Q',14)) eff = eff.mul((b**0.135)+1);
 						return eff
 							},
 						effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
