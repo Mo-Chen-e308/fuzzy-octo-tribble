@@ -147,7 +147,7 @@ addLayer("Q", { //主节点    0层
 			//						},
     gainMult() { // Calculate the multiplier for main currency from bonuses
         //mult = new ExpantaNum(1)
-			var eff = player[this.layer].points.pow(0)
+			var eff = player[this.layer].points.add(1).pow(0) 
 			var b = player.Q.points
 			var a = player.T.points
 				if (hasUpgrade('Q',14)) eff = eff = eff.mul(b**0.135);
