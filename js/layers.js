@@ -36,8 +36,8 @@ addLayer("T", { //次于Q节点 1层
 				effect(){
 						let eff = player.Q.points.add(1).pow(0) 
 						var a = player.T.points
-							if (hasUpgrade('T',11)) eff = eff = eff.mul((a**0.3)+0.025)
-							if (hasUpgrade('T',12)) eff = eff = eff.mul((a**0.075)+0.025)
+							if (hasUpgrade('T',11)) eff = eff.mul((a**0.3)+1)
+							if (hasUpgrade('T',12)) eff = eff.mul((a**0.075)+1)
 						return eff
 					},
 				   effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
