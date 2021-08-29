@@ -109,10 +109,10 @@ function getPointGen() {
 			
 			
 			if (hasUpgrade('Q',11)) eff = eff.mul((b**0.3)+1)
-			if (hasUpgrade('Q',12)) eff = eff.mul((b**0.085)+0.0012)
-			if (hasUpgrade('Q',13)) eff = eff.mul((b**0.09)+0.0013)
-			if (hasUpgrade('Q',15)) eff = eff.mul((b**0.095)+0.0014)
-			if (hasUpgrade('Q',21)) eff = eff.mul((b**0.1)+0.0015)
+			if (hasUpgrade('Q',12)) eff = eff.mul((b**0.085)+1)
+			if (hasUpgrade('Q',13)) eff = eff.mul((b**0.09)+1)
+			if (hasUpgrade('Q',15)) eff = eff.mul((b**0.095)+1)
+			if (hasUpgrade('Q',21)) eff = eff.mul((b**0.1)+1)
 
 			//if (hasUpgrade('Q',11)) eff = player[this.layer].points.add(1).pow(0.2265);
 			//if (hasUpgrade('Q',12)) eff = player[this.layer].points.add(1).pow(0.3375);
