@@ -1,7 +1,7 @@
 addLayer("T", { //次于Q节点 1层
     name: "TAT", 
     symbol: "T", 
-    position: 0, 
+    position: 2, 
     startData() { return {
         unlocked:false,//false
 		points: new ExpantaNum(0),
@@ -14,6 +14,7 @@ addLayer("T", { //次于Q节点 1层
     type: "normal", 
     exponent: 0.5, 
 	branches: ["Q"],
+	effectDescription(){return `(TAT)`},
     gainMult() {
         //mult = new ExpantaNum(1)
 			var eff = player[this.layer].points.add(1).pow(0) 
@@ -41,28 +42,30 @@ addLayer("T", { //次于Q节点 1层
        //if(hasMilestone("a",20) || (hasMilestone("a",33) && player.a.upgrades.length > 0)) return 0.1
        // return 0
    // },
+   ////////////////////////////////////////////////////////////
+   	   //1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
+		  passiveGeneration(){
+        if(hasUpgrade("W",15)) return 0.01
+		if(hasUpgrade("W",22)) return 0.05
+		//if(hasMilestone("T",5)) return 0.05
+       
+        return 0
+    },
    //////////////////////////////////////////////
-   doReset(resettingLayer) {
+	doReset(resettingLayer) {
         let keep = [];
 			//if (hasMilestone("T", 1)) keep.push("upgrades");
 				//if (resettingLayer=="T") keep.push("best","total","milestones","upgrades");
 				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
 				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
-					var a = hasMilestone('T',6)
-					//var b = hasMilestone('T',2)
-					//var c = hasMilestone('T',3)
-					//var d = hasMilestone('T',4)
-					//var c = player.Q.points = new ExpantaNum(3)
+					  var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
-            layerDataReset(this.layer, keep)
-		if(a) player.T.upgrades = [0,1,6];
-		//if(b) player.Q.upgrades = [11,12,13,14,15];
-		//if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
-		//if(d) player.Q.points = new ExpantaNum(10)
-																};
+            layerDataReset(this.layer,keep)
+		if(t) player.T.milestones = [0,1,6]};
 		
 		
 		},
+		
 	//////////////////////////////////////////////////////////////////////////////////
 			upgrades:{
 				11:{
@@ -129,13 +132,13 @@ addLayer("T", { //次于Q节点 1层
 				title:"这个还好！",
 				description:"改善T14的效果",
 				cost:new ExpantaNum(972),
-				unlocked(){return hasUpgrade("T",21)},
+				unlocked(){return hasUpgrade("T",22)},
 			       },
 				31:{
 				title:"这个更好！",
 				description:"每秒.....<br>别想了,这是开W节点的",
 				cost:new ExpantaNum(2916),
-				unlocked(){return hasUpgrade("T",22)},
+				unlocked(){return hasUpgrade("T",23)},
 			       },
 			},
 
@@ -188,6 +191,13 @@ addLayer("T", { //次于Q节点 1层
 		done() {
 			return player.T.points.gte(8000)},
 				},
+		7: {
+			requirementDescription: "8000 T点",
+			effectDescription: "重置时保留T里程碑 1 2<br>也保留本里程碑",
+			unlocked(){return hasUpgrade("T",00)},
+		done() {
+			return player.T.points.gte(1e999999999999999999999999999)},
+				},
 	},
 				/*challenges: {
 		11: {
@@ -206,8 +216,8 @@ addLayer("T", { //次于Q节点 1层
 					},
 					*/
 })
-addLayer("W", { //次于T节点 2层
-    name: "WaW", 
+addLayer("W", { //次于T节点 1层
+    name: "WwW", 
     symbol: "W", 
     position: 0, 
     startData() { return {
@@ -217,11 +227,184 @@ addLayer("W", { //次于T节点 2层
     color: "#97CBFF",
     requires: new ExpantaNum(10000),
     resource: "W点", 
-    baseResource: "T点", 
+    baseResource: "Q点", 
+    baseAmount() {return player.Q.points}, 
+    type: "normal", 
+    exponent: 0.4, 
+	branches: ["Q"],
+	effectDescription(){return `(WwW)`},
+    gainMult() {
+        //mult = new ExpantaNum(1)
+		var eff = player[this.layer].points.add(1).pow(0) 
+				var b = player.Q.points
+				var a = player.T.points
+				var c = player.W.points
+					if (hasUpgrade('W',14)) eff = eff.mul((c**0.15)+1);
+					//if (hasUpgrade('T',23)) eff = eff.mul((a**0.2)+1);
+					
+			return eff
+        //return mult
+    },
+    gainExp() { 
+        return new ExpantaNum(1)
+    },
+    row: 1, 
+	hotkeys: [
+        {key: "w", description: "w: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31))},
+//////////////////////////////////////////////////////////////////////////////////////////
+/*		doReset(resettingLayer) {
+        let keep = [];
+			//if (hasMilestone("T", 1)) keep.push("upgrades");
+				//if (resettingLayer=="W") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+					  //var t = hasMilestone('T',6)
+        if (layers[resettingLayer].row > this.row) {
+            //layerDataReset(this.layer,keep)
+			player.T.points = new ExpantaNum(2)
+			player.T.upgrades = [11,12,13]
+			player.T.milestones = [0,1,2,3,4,6]
+
+			};
+		},
+*/
+///////////////////////////////////////////////////////////////////////////////////////////////
+	/*   doReset(resettingLayer) {
+        let keep = [];
+			//if (hasMilestone("T", 1)) keep.push("upgrades");
+				//if (resettingLayer=="T") keep.push("best","total","milestones","upgrades");
+				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+					var a = hasMilestone('T',6)
+					//var b = hasMilestone('T',2)
+					//var c = hasMilestone('T',3)
+					//var d = hasMilestone('T',4)
+					//var c = player.Q.points = new ExpantaNum(3)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer, keep)
+		if(a) player.T.upgrades = [0,1,6];
+		//if(b) player.Q.upgrades = [11,12,13,14,15];
+		//if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
+		//if(d) player.Q.points = new ExpantaNum(10)
+																};
+		
+		
+		},
+		*/
+		  ////////////////////////////////////////////////////////////
+   	   //1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
+		  passiveGeneration(){
+        if(hasUpgrade("W",23)) return 0.01
+		//if(hasUpgrade("W",22)) return 0.05
+		//if(hasMilestone("T",5)) return 0.05
+       
+        return 0
+    },
+   //////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////
+		upgrades:{
+				11:{
+				title:"什么？",
+				description:"W点倍增<br>QwQ获取",
+				cost:new ExpantaNum(1),
+				effect(){
+						let eff = player.Q.points.add(1).pow(0) 
+						var c = player.W.points
+							if (hasUpgrade('W',11)) eff = eff.mul((c**0.5)+1)
+							if (hasUpgrade('W',12)) eff = eff.mul((c**0.275)+1)
+							if (hasUpgrade('W',13)) eff = eff.mul((c**0.385)+1)
+						return eff
+					},
+					effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+				},
+				12:{
+				title:"重复？",
+				description:"改善W11<br>对QwQ的加成",
+				cost:new ExpantaNum(5),
+				unlocked(){return hasUpgrade("W",11)},
+					},
+				13:{
+				title:"卧槽？",
+				description:"再次改善W11<br>对QwQ的加成",
+				cost:new ExpantaNum(64),
+				unlocked(){return hasUpgrade("W",12)},
+					},
+				14:{
+				title:"卧槽！",
+				description:"根据W点<br>倍增W点获取",
+				cost:new ExpantaNum(144),
+				unlocked(){return hasUpgrade("W",13)},
+				effect(){
+						let eff = player.Q.points.add(1).pow(0) 
+							var c = player.W.points
+								if (hasUpgrade('W',14)) eff = eff.mul((c**0.15)+1)
+						return eff
+					},
+					effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+					},
+				15:{
+				title:"重复！",
+				description:"每秒获得1%的<br>可以重置的T点",
+				cost:new ExpantaNum(1000),
+				unlocked(){return hasUpgrade("W",14)},
+					},
+				21:{
+				title:"还真是！",
+				description:"每秒获得10%<br>可重置的Q点",
+				cost:new ExpantaNum(5000),
+				unlocked(){return hasUpgrade("W",15)},
+					},
+				22:{
+				title:"就这？",
+				description:"每秒获得5%的<br>可以重置的T点",
+				cost:new ExpantaNum(10000),
+				unlocked(){return hasUpgrade("W",21)},
+					},
+				23:{
+				title:"没错！",
+				description:"每秒获得1%的<br>可以重置的W点",
+				cost:new ExpantaNum(30000),
+				unlocked(){return hasUpgrade("W",22)},
+					},
+				31:{
+				title:"就这！",
+				description:"大幅提升Q11加成<br>是不是快把Q11忘记了",
+				cost:new ExpantaNum(50000),
+				unlocked(){return hasUpgrade("W",23)},
+					},
+				
+	},
+	///////////////////////////////////////////////////////////////
+		milestones: {
+		0: {
+			requirementDescription: "1 W点",
+			effectDescription: "您获得了第一个Q点",
+			done() {
+			return player.W.points.gte(1)},
+				},
+			
+			
+					},
+		
+})
+addLayer("^", { //次于T\W节点 2层
+    name: "^_^", 
+    symbol: "^", 
+    position: 0, 
+    startData() { return {
+        unlocked:false,//false
+		points: new ExpantaNum(0),
+    }},
+    color: "#97CBFF",
+    requires: new ExpantaNum(10000),
+    resource: "^点", 
+    baseResource: "1", 
     baseAmount() {return player.T.points}, 
     type: "normal", 
-    exponent: 0.5, 
-	branches: ["Q"],
+    exponent: 0.45, 
+	branches: ["W","T"],
+	effectDescription(){return `(^_^)`},
     gainMult() {
         mult = new ExpantaNum(1)
         return mult
@@ -231,9 +414,51 @@ addLayer("W", { //次于T节点 2层
     },
     row: 2, 
 	hotkeys: [
-        {key: "w", description: "w: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "^", description: "^: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31))},
+	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31)&&(hasUpgrade("W",00)))},
+//////////////////////////////////////////////////////////////////////////////////////////
+/*		doReset(resettingLayer) {
+        let keep = [];
+			//if (hasMilestone("T", 1)) keep.push("upgrades");
+				//if (resettingLayer=="W") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+					  //var t = hasMilestone('T',6)
+        if (layers[resettingLayer].row > this.row) {
+            //layerDataReset(this.layer,keep)
+			player.T.points = new ExpantaNum(2)
+			player.T.upgrades = [11,12,13]
+			player.T.milestones = [0,1,2,3,4,6]
+
+			};
+		},
+*/
+///////////////////////////////////////////////////////////////////////////////////////////////
+	/*   doReset(resettingLayer) {
+        let keep = [];
+			//if (hasMilestone("T", 1)) keep.push("upgrades");
+				//if (resettingLayer=="T") keep.push("best","total","milestones","upgrades");
+				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+					var a = hasMilestone('T',6)
+					//var b = hasMilestone('T',2)
+					//var c = hasMilestone('T',3)
+					//var d = hasMilestone('T',4)
+					//var c = player.Q.points = new ExpantaNum(3)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer, keep)
+		if(a) player.T.upgrades = [0,1,6];
+		//if(b) player.Q.upgrades = [11,12,13,14,15];
+		//if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
+		//if(d) player.Q.points = new ExpantaNum(10)
+																};
+		
+		
+		},
+		*/
+		///////////////////////////////////////////////////////////////
+		
+		
 })
 addLayer("Q", { //主节点    0层
     name: "QwQ", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -253,6 +478,7 @@ addLayer("Q", { //主节点    0层
 	baseAmount() {return player.points}, 
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
 	exponent: 0.55,
+	effectDescription(){return `(QwQ)`},
 			//doReset(resettingLayer) {
 			//let keep = [];
 			//if (resettingLayer=="s") keep.push("points","best","total","milestones","upgrades");
@@ -325,21 +551,28 @@ addLayer("Q", { //主节点    0层
 	//return gain */
 doReset(resettingLayer) {
         let keep = [];
-			//if (hasMilestone("T", 1)) keep.push("upgrades");
-				//if (resettingLayer=="T") keep.push("best","total","milestones","upgrades");
+			//if (hasMilestone("T",1)) keep.push("Milestone");
+				//if (resettingLayer=="W") keep.push("best","total","milestones","upgrades");
 				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
 				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+					var aa = hasMilestone('Q',0)
 					var a = hasMilestone('T',1)
 					var b = hasMilestone('T',2)
 					var c = hasMilestone('T',3)
 					var d = hasMilestone('T',4)
+
 					//var c = player.Q.points = new ExpantaNum(3)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer, keep)
+		if(aa) player.Q.milestones = [0];
 		if(a) player.Q.upgrades = [11,12,13];
 		if(b) player.Q.upgrades = [11,12,13,14,15];
 		if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
 		if(d) player.Q.points = new ExpantaNum(10)};
+		//////////////////////////////////////////////////
+            //layerDataReset(this.layer, keep)
+		//if(aa) player.Q.milestones = [0];
+													
 		
 		
 		},
@@ -374,6 +607,7 @@ doReset(resettingLayer) {
 							if (hasUpgrade('Q',13)) eff = eff.mul((b**0.09)+1)
 							if (hasUpgrade('Q',15)) eff = eff.mul((b**0.095)+1)
 							if (hasUpgrade('Q',21)) eff = eff.mul((b**0.1)+1)
+							if (hasUpgrade('W',31)) eff = eff.mul((b**0.5)+1)
 
 
 							//if (hasUpgrade('T',11)) eff = player[this.layer].points.add(1).pow(0.2);
@@ -489,7 +723,7 @@ doReset(resettingLayer) {
 			effect(){
 						var eff = player.points.pow(0)
 							var b = player.Q.points
-							if (hasMilestone('Q',0)) eff = eff = eff.mul((b**0.001)+0.001)
+							if (hasMilestone('Q',0)) eff = eff.mul((b**0.001)+0.001)
 			return eff},
 		done() {
 			return player.Q.points.gte(1)},

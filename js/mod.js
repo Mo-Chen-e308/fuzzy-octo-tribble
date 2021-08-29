@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.1.7",
+	num: "0.0.2.4",
 	name: "",
 }
 
@@ -60,6 +60,13 @@ let changelog = `<h1>更新日志:</h1><br>
 		- T节点更新了好多里程碑<br>
 		- T节点更新了T13~T23升级<br>
 		- 新增W节点框架<br>
+	<h2>v0.0.2.4</h2><br>
+		- 别问我v0.0.1.8~v0.0.2.3去哪了<br>
+		- 新增W节点升级W11~W31<br>
+		- 改善好多好多好多好多升级<br>
+		- 修了很多很多很多很多bug<br>
+		- 添加(？^层框架<br>
+		- 记得别刷太多小心崩掉！
 		
 		
 		
@@ -111,6 +118,7 @@ function getPointGen() {
 		let eff = player[this.layer].points.add(1).pow(0) 
 			var a = player.T.points
 			var b = player.Q.points	
+			var c = player.W.points	
 			
 			
 			if (hasUpgrade('Q',11)) eff = eff.mul((b**0.3)+1)
@@ -129,6 +137,11 @@ function getPointGen() {
 			if (hasUpgrade('T',13)) eff = eff.mul((a**0.185)+1)
 			if (hasUpgrade('T',15)) eff = eff.mul((a**0.215)+1)
 			//if (hasUpgrade('T',14)) eff = eff.mul((a**0.15)+1)
+				
+			if (hasUpgrade('W',11)) eff = eff.mul((c**0.5)+1)
+			if (hasUpgrade('W',12)) eff = eff.mul((c**0.275)+1)
+			if (hasUpgrade('W',13)) eff = eff.mul((c**0.385)+1)
+			if (hasUpgrade('W',31)) eff = eff.mul((b**0.2)+1)
 			
 			
 		return eff
@@ -156,8 +169,8 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return"芜湖"},
-	function(){return"芜湖"},
+	function(){return"已添加软上限"},
+	function(){return"记得别刷太多  快捷键未禁用"},
 ]
 
 // Determines when the game "ends"
