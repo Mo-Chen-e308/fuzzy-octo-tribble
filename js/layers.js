@@ -227,18 +227,19 @@ doReset(resettingLayer) {
 				title:"加成？",
 				description:"根据Q点<br>加成QwQ获取",
 				cost:new ExpantaNum(3),
+				
 					effect(){
 						let eff = player[this.layer].points.add(1).pow(0) 
-							var b = player.Q.points
+						
 							
-							if (hasUpgrade('Q',11)&&(player.Q.points == new ExpantaNum(0))) player.Q.points = new ExpantaNum(1)
-					
+							//if (hasUpgrade('Q',11)&&(player.Q.points == new ExpantaNum(0))) player.Q.points = new ExpantaNum(1)
+						var b = player.Q.points	
 		
-							if (hasUpgrade('Q',11)) eff = eff.mul(b**0.3)
-							if (hasUpgrade('Q',12)) eff = eff.mul(b**0.085)
-							if (hasUpgrade('Q',13)) eff = eff.mul(b**0.09)
-							if (hasUpgrade('Q',15)) eff = eff.mul(b**0.095)
-							if (hasUpgrade('Q',21)) eff = eff.mul(b**0.1)
+							if (hasUpgrade('Q',11)) eff = eff.mul((b**0.3)+1)
+							if (hasUpgrade('Q',12)) eff = eff.mul((b**0.085)+0.0012)
+							if (hasUpgrade('Q',13)) eff = eff.mul((b**0.09)+0.0013)
+							if (hasUpgrade('Q',15)) eff = eff.mul((b**0.095)+0.0014)
+							if (hasUpgrade('Q',21)) eff = eff.mul((b**0.1)+0.0015)
 
 
 							//if (hasUpgrade('T',11)) eff = player[this.layer].points.add(1).pow(0.2);
@@ -267,8 +268,8 @@ doReset(resettingLayer) {
 				unlocked(){return hasUpgrade("Q",13)},
 					effect(){
 						var eff = player.points.pow(0)
-						var b = player.Q.points
-							if (hasUpgrade('Q',14)) eff = eff = eff.mul(b**0.135);
+							var b = player.Q.points
+							if (hasUpgrade('Q',14)) eff = eff.mul((b**0.135)+0.01);
 						return eff
 							},
 						effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -353,9 +354,8 @@ doReset(resettingLayer) {
 			effectDescription: "您获得了第一个Q点",
 			effect(){
 						var eff = player.points.pow(0)
-						var b = player.Q.points
-		
-							if (hasMilestone('Q',0)) eff = eff = eff.mul(b**0.001)
+							var b = player.Q.points
+							if (hasMilestone('Q',0)) eff = eff = eff.mul((b**0.001)+0.001)
 			return eff},
 		done() {
 			return player.Q.points.gte(1)},
