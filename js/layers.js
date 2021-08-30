@@ -359,31 +359,31 @@ addLayer("W", { //次于T节点 1层(挑战层)(？
 				15:{
 				title:"重复！",
 				description:"每秒获得1%的<br>可以重置的T点",
-				cost:new ExpantaNum(1000),
+				cost:new ExpantaNum(800),
 				unlocked(){return hasUpgrade("W",14)},
 					},
 				21:{
 				title:"还真是！",
 				description:"每秒获得10%<br>可重置的Q点",
-				cost:new ExpantaNum(5000),
+				cost:new ExpantaNum(2500),
 				unlocked(){return hasUpgrade("W",15)},
 					},
 				22:{
 				title:"就这？",
 				description:"每秒获得5%的<br>可以重置的T点",
-				cost:new ExpantaNum(10000),
+				cost:new ExpantaNum(6000),
 				unlocked(){return hasUpgrade("W",21)},
 					},
 				23:{
 				title:"没错！",
 				description:"每秒获得1%的<br>可以重置的W点",
-				cost:new ExpantaNum(30000),
+				cost:new ExpantaNum(10000),
 				unlocked(){return hasUpgrade("W",22)},
 					},
 				31:{
 				title:"就这！",
 				description:"大幅提升Q11加成<br>是不是快把Q11忘记了",
-				cost:new ExpantaNum(50000),
+				cost:new ExpantaNum(25000),
 				unlocked(){return hasUpgrade("W",23)},
 					},
 				
@@ -508,7 +508,7 @@ addLayer("a", { //次于T\W节点 2层
 			//unlocked() {return hasUpgrade("Q",22)},
 			canComplete: function() {return player.T.points.gte(1e9) && player.W.points.gte(1e6)},
 			goalDescription:"1e9 T点 1e6 W点",
-			rewardDescription: "无<h6>用来开启ac12",
+			rewardDescription: "无<h6>用来开启ac12<h6>点数获取^1.5",
 			},
 					},
 		

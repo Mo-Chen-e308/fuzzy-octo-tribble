@@ -161,7 +161,8 @@ function getPointGen() {
 			//	a = powsoftcap(a,Decimal(1e10),10) //返回1e19,即为1e10 * 1e90^(1/10)
 			//if (inChallenge('a',11)) eff = eff.mul(0.001))
 			if (inChallenge('a',11)) eff = player[this.layer].points.add(1).pow(0.238);
-			//if (hasChallenge('a',11)) eff = player[this.layer].points.add(1).pow(0.5);
+			if (hasChallenge('a',11)) eff = player[this.layer].points.add(1).pow(1.5);
+			//////////////////////////////////////////////////////////////
 			eff = softcap(eff,new ExpantaNum(1e6),0.95)
 			eff = softcap(eff,new ExpantaNum(1e8),0.85)
 			eff = softcap(eff,new ExpantaNum(1e10),0.75)
