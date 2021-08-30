@@ -457,9 +457,9 @@ addLayer("a", { //次于T\W节点 2层
         return new ExpantaNum(1)
     },
     row: 2, 
-	hotkeys: [
-        {key: "a", description: "a: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
-	],
+	//hotkeys: [
+    //    {key: "a", description: "a: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+	//],
 	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31)&&(hasUpgrade("W",31)))},
 //////////////////////////////////////////////////////////////////////////////////////////
 /*		doReset(resettingLayer) {
