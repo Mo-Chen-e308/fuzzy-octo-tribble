@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.0.9",
+	num: "0.0.2.6",
 	name: "",
 }
 
@@ -44,8 +44,34 @@ let changelog = `<h1>更新日志:</h1><br>
 	<h2>v0.0.0.9</h2><br>
 		- 删除T节点挑战<br>
 		- 新增T节点里程碑<br>
-		- 修复若干bug 改善若干升级效果
-		
+		- 修复若干bug 改善若干升级效果<br>
+	<h2>v0.0.1.0</h2><br>
+		- 重置Q T节点升级<br>
+		- 重新制作Q T节点升级效果<br>
+		- 修复很多很多很多很多bug<br>
+	<h2>v0.0.1.1</h2><br>
+		- 修复好多好多好多好多bug<br>
+		- 修复了3Q点买Q11会不生产QwQ的bug<br>
+	<h2>v0.0.1.3</h2><br>
+		- 不要问我v0.0.1.2去哪了<br>
+		- 修复了很多很多bug<br>
+	<h2>v0.0.1.7</h2><br>
+		- 不要问我v0.0.1.4~v0.0.1.6去哪了<br>
+		- T节点更新了好多里程碑<br>
+		- T节点更新了T13~T23升级<br>
+		- 新增W节点框架<br>
+	<h2>v0.0.2.4</h2><br>
+		- 别问我v0.0.1.8~v0.0.2.3去哪了<br>
+		- 新增W节点升级W11~W31<br>
+		- 改善好多好多好多好多升级<br>
+		- 修了很多很多很多很多bug<br>
+		- 添加(？^层框架<br>
+		- 记得别刷太多小心崩掉！<br>
+	<h2>v0.0.2.6</h2><br>
+		- 别问我v0.0.2.5去哪了<br>
+		- 添加点数获取软上限<br>
+		- 测试过后微调需求数量等<br>
+		- 正在考虑加加成软上限<br>
 		
 		
 		
@@ -95,24 +121,59 @@ function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(1)
 	let gain = new ExpantaNum()
 		let eff = player[this.layer].points.add(1).pow(0) 
-		
-			if (hasUpgrade('Q',11)) eff = player[this.layer].points.add(1).pow(0.2265);
-			if (hasUpgrade('Q',12)) eff = player[this.layer].points.add(1).pow(0.3375);
-			if (hasUpgrade('Q',13)) eff = player[this.layer].points.add(1).pow(0.4485);
-			if (hasUpgrade('Q',15)) eff = player[this.layer].points.add(1).pow(0.4695);
-			if (hasUpgrade('Q',21)) eff = player.Q.points.add(1).pow(0.4805);
-			if (hasUpgrade('T',11)) eff = player.Q.points.add(1).pow(0.2);
-			if (hasUpgrade('T',12)) eff = player.Q.points.add(1).pow(0.3);
+			var a = player.T.points
+			var b = player.Q.points	
+			var c = player.W.points	
+			
+			///////////////////////////////////////////////
+			//softcap:new ExpantaNum(1e20)
+			//softcapPower:new ExpantaNum(1000)
+			//softcap(5, 10, 0.5)
+			//gain = powsoftcap(gain,1e20,10)
+			//gain = powsoftcap(gain,e("20"),e(10))
+			////////////////////////////////////////////
 			
 			
+			if (hasUpgrade('Q',11)) eff = eff.mul((b**0.3)+1)
+			if (hasUpgrade('Q',12)) eff = eff.mul((b**0.085)+1)
+			if (hasUpgrade('Q',13)) eff = eff.mul((b**0.09)+1)
+			if (hasUpgrade('Q',15)) eff = eff.mul((b**0.095)+1)
+			if (hasUpgrade('Q',21)) eff = eff.mul((b**0.1)+1)
+
+			//if (hasUpgrade('Q',11)) eff = player[this.layer].points.add(1).pow(0.2265);
+			//if (hasUpgrade('Q',12)) eff = player[this.layer].points.add(1).pow(0.3375);
+			//if (hasUpgrade('Q',13)) eff = player[this.layer].points.add(1).pow(0.4485);
+			//if (hasUpgrade('Q',15)) eff = player[this.layer].points.add(1).pow(0.4695);
+			//if (hasUpgrade('Q',21)) eff = player[this.layer].points.add(1).pow(0.4805);
+			if (hasUpgrade('T',11)) eff = eff.mul((a**0.3)+1)
+			if (hasUpgrade('T',12)) eff = eff.mul((a**0.075)+1)
+			if (hasUpgrade('T',13)) eff = eff.mul((a**0.185)+1)
+			if (hasUpgrade('T',15)) eff = eff.mul((a**0.215)+1)
+			//if (hasUpgrade('T',14)) eff = eff.mul((a**0.15)+1)
+				
+			if (hasUpgrade('W',11)) eff = eff.mul((c**0.3)+1)
+			if (hasUpgrade('W',12)) eff = eff.mul((c**0.0285)+1)
+			if (hasUpgrade('W',13)) eff = eff.mul((c**0.0785)+1)
+			if (hasUpgrade('W',31)) eff = eff.mul((b**0.1245)+1)
+			
+			///////////////////////////////////////////////////
+			//var a = new Decimal(1e100)
+			//	a = powsoftcap(a,Decimal(1e10),10) //返回1e19,即为1e10 * 1e90^(1/10)
+			//if (inChallenge('a',11)) eff = eff.mul(0.001))
+			if (inChallenge('a',11)) eff = player[this.layer].points.add(1).pow(0.238);
+			//if (hasChallenge('a',11)) eff = player[this.layer].points.add(1).pow(0.5);
+			eff = softcap(eff,new ExpantaNum(1e6),0.95)
+			eff = softcap(eff,new ExpantaNum(1e8),0.85)
+			eff = softcap(eff,new ExpantaNum(1e10),0.75)
+			eff = softcap(eff,new ExpantaNum(1e12),0.65)
+			
+ 
+			//////////////////////////////////////////////////////////////////
 		return eff
 			
 			//let Qjc = player.Q.points.add(1).pow(0);
 			//if (hasUpgrade('T',11)) Qjc = player.Q.points.add(1).pow(0.75);
 			//if (hasChallenge('T',11)) eff = player[this.layer].points.add(1).pow(0.5);
-			
-			
-			
 			
 			//if (inChallenge('T',11)) eff = player[this.layer].points.add(1).pow(0.238);
 			
@@ -130,8 +191,8 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return"芜湖"},
-	function(){return"芜湖"},
+	function(){return"已添加软上限"},
+	function(){return"芜湖？(你翅膀掉了)"},
 ]
 
 // Determines when the game "ends"
