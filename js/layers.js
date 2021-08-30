@@ -45,11 +45,12 @@ addLayer("T", { //次于Q节点 1层
    ////////////////////////////////////////////////////////////
    	   //1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
 		  passiveGeneration(){
-        if(hasUpgrade("W",15)) return 0.01
-		if(hasUpgrade("W",22)) return 0.05
+			  var b = new ExpantaNum(0)
+        if(hasUpgrade("W",15)) var b = new ExpantaNum(0.01)//return 0.01
+		if(hasUpgrade("W",22)) var b = new ExpantaNum(0.05)//return 0.05
 		//if(hasMilestone("T",5)) return 0.05
        
-        return 0
+        return b
     },
    //////////////////////////////////////////////
 	doReset(resettingLayer) {
@@ -59,9 +60,11 @@ addLayer("T", { //次于Q节点 1层
 				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
 				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
 					  var t = hasMilestone('T',6)
+					//  var d = hasMilestone('W',4)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer,keep)
 		if(t) player.T.milestones = [0,1,6]};
+	//	if(e) player.T.milestones = [0,1,2,6];
 		
 		
 		},
@@ -191,13 +194,13 @@ addLayer("T", { //次于Q节点 1层
 		done() {
 			return player.T.points.gte(8000)},
 				},
-		7: {
-			requirementDescription: "8000 T点",
-			effectDescription: "重置时保留T里程碑 1 2<br>也保留本里程碑",
-			unlocked(){return hasUpgrade("T",00)},
-		done() {
-			return player.T.points.gte(1e999999999999999999999999999)},
-				},
+		//7: {
+		//	requirementDescription: "8000 T点",
+		//	effectDescription: "重置时保留T里程碑 1 2<br>也保留本里程碑",
+		//	unlocked(){return hasUpgrade("T",00)},
+		//done() {
+		//	return player.T.points.gte(1e999999999999999999999999999)},
+		//		},
 	},
 				/*challenges: {
 		11: {
@@ -216,7 +219,7 @@ addLayer("T", { //次于Q节点 1层
 					},
 					*/
 })
-addLayer("W", { //次于T节点 1层
+addLayer("W", { //次于T节点 1层(挑战层)(？
     name: "WwW", 
     symbol: "W", 
     position: 0, 
@@ -270,20 +273,29 @@ addLayer("W", { //次于T节点 1层
 		},
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////
-	/*   doReset(resettingLayer) {
+	   doReset(resettingLayer) {
         let keep = [];
 			//if (hasMilestone("T", 1)) keep.push("upgrades");
 				//if (resettingLayer=="T") keep.push("best","total","milestones","upgrades");
 				//if (resettingLayer=="a") keep.push("points","best","total","milestones","upgrades");
 				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
-					var a = hasMilestone('T',6)
-					//var b = hasMilestone('T',2)
-					//var c = hasMilestone('T',3)
-					//var d = hasMilestone('T',4)
+					var a = hasMilestone('W',1)
+					var b = hasMilestone('W',2)
+					//var c = hasMilestone('W',3)
+					//var d = hasMilestone('W',4)
+					//var e = hasMilestone('W',5)
 					//var c = player.Q.points = new ExpantaNum(3)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer, keep)
-		if(a) player.T.upgrades = [0,1,6];
+					var c = hasMilestone('W',3)
+					var d = hasMilestone('W',4)
+					var e = hasMilestone('W',5)
+			if(e) player.W.milestones = [0,1,5];
+			if(e) player.T.milestones = [0,1,2,6];
+		if(a) player.T.upgrades = [11];
+		if(b) player.T.upgrades = [11,12,13];
+		if(c) player.T.upgrades = [11,12,13,14,15];
+		if(d) player.T.upgrades = [11,12,13,14,15,21,22,23];
 		//if(b) player.Q.upgrades = [11,12,13,14,15];
 		//if(c) player.Q.upgrades = [11,12,13,14,15,21,22,23];
 		//if(d) player.Q.points = new ExpantaNum(10)
@@ -291,15 +303,16 @@ addLayer("W", { //次于T节点 1层
 		
 		
 		},
-		*/
+		
 		  ////////////////////////////////////////////////////////////
    	   //1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
 		  passiveGeneration(){
-        if(hasUpgrade("W",23)) return 0.01
+			  var c = new ExpantaNum(0)
+        if(hasUpgrade("W",23)) var c = new ExpantaNum(0.01)//return 0.01
 		//if(hasUpgrade("W",22)) return 0.05
 		//if(hasMilestone("T",5)) return 0.05
        
-        return 0
+        return c
     },
    //////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
@@ -383,28 +396,59 @@ addLayer("W", { //次于T节点 1层
 			done() {
 			return player.W.points.gte(1)},
 				},
+		1: {
+			requirementDescription: "100 W点",
+			effectDescription: "重置时保留T11升级",
+			done() {
+			return player.W.points.gte(100)},
+				},
+		2: {
+			requirementDescription: "10000 W点",
+			effectDescription: "重置时保留T12 T13升级",
+			done() {
+			return player.W.points.gte(10000)},
+				},
+		3: {
+			requirementDescription: "10000000 W点",
+			effectDescription: "重置时保留T节点第一排升级",
+			done() {
+			return player.W.points.gte(10000000)},
+				},
+		4: {
+			requirementDescription: "1e9 W点",
+			effectDescription: "重置时保留T节点第二排升级",
+			done() {
+			return player.W.points.gte(1e9)},
+				},
+		5: {
+			requirementDescription: "1e12 W点",
+			effectDescription: "重置时保留W里程碑1 2 和T里程碑3<br>并且保留此里程碑",
+			done() {
+			return player.W.points.gte(1e12)},
+				},
 			
 			
 					},
 		
 })
-addLayer("^", { //次于T\W节点 2层
-    name: "^_^", 
-    symbol: "^", 
+addLayer("a", { //次于T\W节点 2层
+    name: "awa", 
+    symbol: "a", 
     position: 0, 
     startData() { return {
         unlocked:false,//false
 		points: new ExpantaNum(0),
     }},
-    color: "#97CBFF",
-    requires: new ExpantaNum(10000),
-    resource: "^点", 
-    baseResource: "1", 
-    baseAmount() {return player.T.points}, 
+    color: "#93FF93",
+	requires: new ExpantaNum(0),
+    resource: "a点", 
+	baseResource: "a点", 
+	baseAmount() {return player.a.points}, 
     type: "normal", 
-    exponent: 0.45, 
+	exponent: NaN, 
 	branches: ["W","T"],
-	effectDescription(){return `(^_^)`},
+	effectDescription(){return `(awa)<br>注：为了不触发bug 请不要获取a点(无任何用处)<br>需要做挑
+	战时点获得a点才能开始(我也不知道为啥)<br>点开始挑战之后需要刷新一下才能显示(至少我这边这样) `},
     gainMult() {
         mult = new ExpantaNum(1)
         return mult
@@ -414,9 +458,9 @@ addLayer("^", { //次于T\W节点 2层
     },
     row: 2, 
 	hotkeys: [
-        {key: "^", description: "^: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
-    ],
-	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31)&&(hasUpgrade("W",00)))},
+        {key: "a", description: "a: Reset for s points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+	],
+	layerShown(){return player[this.layer].unlocked || (hasUpgrade("T",31)&&(hasUpgrade("W",31)))},
 //////////////////////////////////////////////////////////////////////////////////////////
 /*		doReset(resettingLayer) {
         let keep = [];
@@ -457,6 +501,16 @@ addLayer("^", { //次于T\W节点 2层
 		},
 		*/
 		///////////////////////////////////////////////////////////////
+		challenges: {
+		11: {
+			name: "珍惜你的QwQ点数！",
+			challengeDescription: "不管你每秒获得多少QwQ点数<br>它总是变为其35%<br>注：重置所有 里程碑/升级保留除外",
+			//unlocked() {return hasUpgrade("Q",22)},
+			canComplete: function() {return player.T.points.gte(1e9) && player.W.points.gte(1e6)},
+			goalDescription:"1e9 T点 1e6 W点",
+			rewardDescription: "无<h6>用来开启ac12",
+			},
+					},
 		
 		
 })
@@ -468,7 +522,7 @@ addLayer("Q", { //主节点    0层
         unlocked: true,
 		points: new ExpantaNum(0),
     }},
-    color: "#cceee5",
+    color: "#BBFFFF",
 	
 	//branches(){“QwQ”}
 	
@@ -490,12 +544,18 @@ addLayer("Q", { //主节点    0层
        //if(hasMilestone("a",20) || (hasMilestone("a",33) && player.a.upgrades.length > 0)) return 0.1
 	   //1 = 100%  0.1 = 10%  0.01 = 1% 0.001 = 0.1%
 		  passiveGeneration(){
-        if(hasUpgrade("T",21)) return 0.005
-		if(hasUpgrade("T",22)) return 0.015
-		if(hasMilestone("T",5)) return 0.05
+			  var a = new ExpantaNum(0)
+        if(hasUpgrade("T",21)) var a = new ExpantaNum(0.005)//return 0.005
+		if(hasUpgrade("T",22)) var a = new ExpantaNum(0.015)//return 0.015
+		if(hasMilestone("T",5)) var a = new ExpantaNum(0.05)//return 0.05
+		if(hasUpgrade("W",21)) var a = new ExpantaNum(0.1)//return 0.1
+		return a
        
-        return 0
+        
     },
+	/////////////////////////////////////////////////
+	//softcap:new ExpantaNum(1), 
+    //softcapPower:new ExpantaNum(0.5), 
 	////////////////////////////////////////////////////////////////////////////
     gainMult() { // Calculate the multiplier for main currency from bonuses
         //mult = new ExpantaNum(1)
