@@ -86,6 +86,11 @@ let changelog = `<h1>更新日志:</h1><br>
 		- 新增ab挑战<br>
 		- 微调属性<br>
 		- 改善a挑战加成/减益<br>
+	<h2>v0.1.3</h2><br>
+		- 别问我v0.1.0.4~0.1.2去哪了<br>
+		- 新增a节点3个挑战及ab节点3个挑战<br>
+		- 新增Qb节点及升级<br>
+		- 新增WbTb获取软上限<br>
 		
 		
 		
@@ -162,6 +167,7 @@ function getPointGen() {
 			//if (hasUpgrade('Q',13)) eff = player[this.layer].points.add(1).pow(0.4485);
 			//if (hasUpgrade('Q',15)) eff = player[this.layer].points.add(1).pow(0.4695);
 			//if (hasUpgrade('Q',21)) eff = player[this.layer].points.add(1).pow(0.4805);
+			if(!inChallenge('ab',21)){
 			if (!inChallenge('Wb',11)){
 				if (!inChallenge('ab',11)){
 			if (hasUpgrade('T',11)) eff = eff.mul((a**0.3)+1)
@@ -171,12 +177,15 @@ function getPointGen() {
 			//if (hasUpgrade('T',14)) eff = eff.mul((a**0.15)+1)
 				}
 			}
+			}
+			if(!inChallenge('ab',21)){
 				if (!inChallenge('ab',11)){
 			if (hasUpgrade('W',11)) eff = eff.mul((c**0.3)+1)
 			if (hasUpgrade('W',12)) eff = eff.mul((c**0.0285)+1)
 			if (hasUpgrade('W',13)) eff = eff.mul((c**0.0785)+1)
 			if (hasUpgrade('W',31)) eff = eff.mul((b**0.1245)+1)
 				}
+			}
 			
 			///////////////////////////////////////////////////
 			//var a = new Decimal(1e100)
@@ -185,8 +194,10 @@ function getPointGen() {
 			if (inChallenge('a',11)) eff = eff.add(1).mul(0.42);
 			if (hasChallenge('a',11)) eff = eff.add(1).pow(2);
 			if (inChallenge('Q',11)) eff = eff.add(1).pow(0.01);
+			if(!inChallenge('ab',21)){
+			if (!inChallenge('ab',12)){
 			if (hasChallenge('Tb',11)) eff = eff.add(1).pow(1.5);
-			if (hasChallenge('Wb',11)) eff = eff.add(1).pow(1.5);
+			if (hasChallenge('Wb',11)) eff = eff.add(1).pow(1.5)}};
 			if (inChallenge('a',12)) eff = eff.add(1).mul(0.38);
 			//if (hasChallenge('a',12)) eff = eff.add(1).pow(1.2);
 			if (inChallenge('a',21)) eff = eff.add(1).mul(0.32);
@@ -194,6 +205,8 @@ function getPointGen() {
 			if (inChallenge('a',22)) eff = eff.add(1).mul(0.25);
 			if (hasChallenge('a',22)) eff = eff.add(1).pow(2);
 			if (hasChallenge('ab',11)) eff = eff.add(1).pow(2);
+			if (hasChallenge('ab',12)) eff = eff.add(1).pow(2);
+			if (hasChallenge('ab',21)) eff = eff.add(1).pow(1.5);
 			//////////////////////////////////////////////////////////////
 			eff = softcap(eff,new ExpantaNum(1e6),0.95)
 			eff = softcap(eff,new ExpantaNum(1e8),0.85)
