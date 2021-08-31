@@ -901,7 +901,7 @@ addLayer("Qb", { //次于Tb/Wb/Q节点 2层
 	upgrades:{
 		//var z = new ExpantaNum(1000)
 				11:{
-				title:"11",
+				title:"未设置加成！",
 				description:"1",
 				cost:new ExpantaNum(1),
 				},
