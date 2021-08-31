@@ -584,7 +584,8 @@ addLayer("Tb", { //T节点的额外升级节点 2层
 			if(!inChallenge('ab',21)){
 			if (!inChallenge('ab',12)){
 			if (hasUpgrade('Tb',11)) eff = eff.mul((d**0.35)+1)}};
-				if (player.Tb.points > new ExpantaNum(1e40)) eff = eff.pow(0.5);
+			if (!hasUpgrade('Qb',21)) {if (player.Tb.points > new ExpantaNum(1e40)) eff = eff.pow(0.5)};
+			if (hasUpgrade('Qb',21)) {if (player.Tb.points > new ExpantaNum(1e50)) eff = eff.pow(0.5)};
 				
 		return eff
        //return mult
@@ -736,7 +737,8 @@ addLayer("Wb", { //W节点的额外升级节点 2层
 			if(!inChallenge('ab',21)){
 			if (!inChallenge('ab',12)){
 			if (hasUpgrade('Wb',11)) eff = eff.mul((y**0.45)+1)}};
-			if (y > new ExpantaNum(1e30)) eff = eff.pow(0.5);
+			if (!hasUpgrade('Qb',22)) {if (player.Tb.points > new ExpantaNum(1e30)) eff = eff.pow(0.5)};
+			if (hasUpgrade('Qb',22)) {if (player.Tb.points > new ExpantaNum(1e40)) eff = eff.pow(0.5)};
 				
 		return eff
        // return mult
@@ -865,6 +867,9 @@ milestones: {
 					},
 				
 })
+var z = new ExpantaNum(1)
+var zz = new ExpantaNum(1)
+var zzz = new ExpantaNum(1)
 addLayer("Qb", { //次于Tb/Wb/Q节点 2层 
     name: "QwQb", 
     symbol: "Qb", 
@@ -883,9 +888,14 @@ addLayer("Qb", { //次于Tb/Wb/Q节点 2层
 	branches: ["Q"],
 	//effectDescription(){return `(awa)<br>注：为了不触发bug 请不要获取a点(无任何用处)<br>需要做挑战
 	//时点获得a点才能开始(我也不知道为啥)<br>点开始挑战之后需要刷新一下才能显示(至少我这边这样) `},
-    gainMult() {
-        mult = new ExpantaNum(1)
-        return mult
+   gainMult() {
+       // mult = new ExpantaNum(1)
+		var eff = player[this.layer].points.add(1).pow(0) 
+			var QBD = player.Wb.points
+			if (QBD > new ExpantaNum(1000)) eff = eff.pow(0.5);
+				
+		return eff
+       // return mult
     },
     gainExp() { 
         return new ExpantaNum(1)
@@ -901,79 +911,99 @@ addLayer("Qb", { //次于Tb/Wb/Q节点 2层
 	upgrades:{
 		//var z = new ExpantaNum(1000)
 				11:{
-				title:"未设置加成！",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"提升！",
+				description:"QwQ获取提高^1.7<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				//canAfford(){return hasupgrade('Qb',12)}
+				onPurchase(){z = z.mul(8)},
 				},
 				12:{
-				title:"12",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"提升！",
+				description:"QwQ获取提高^1.8<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				13:{
-				title:"13",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"提升！",
+				description:"QwQ获取提高^1.9<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				14:{
-				title:"14",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"提升！",
+				description:"QwQ获取提高^2<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				15:{
-				title:"15",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"开启Qb第二排",
+				description:"<br><br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				unlocked(){return hasUpgrade("Qb",11)&&hasUpgrade("Qb",12)&&hasUpgrade("Qb",13)&&hasUpgrade("Qb",14)},
+				onPurchase(){z = z.mul(8)},
 				},
 				21:{
-				title:"21",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"移除！",
+				description:"将Tbe40软上限<br>延迟到e50<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				22:{
-				title:"22",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"移除！",
+				description:"将Wbe30软上限<br>延迟到e40<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				23:{
-				title:"23",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"移除！",
+				description:"将QwQ点数e108软上限延迟到e124<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				24:{
-				title:"24",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"移除！",
+				description:"将QwQ点数e124软上限延迟到e140<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				onPurchase(){z = z.mul(8)},
 				},
 				25:{
-				title:"25",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"开启Qb第三排",
+				description:"<br><br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				unlocked(){return hasUpgrade("Qb",21)&&hasUpgrade("Qb",22)&&hasUpgrade("Qb",23)&&hasUpgrade("Qb",24)},
+				onPurchase(){z = z.mul(8)},
 				},
 				31:{
-				title:"31",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"保留Wb全部升级",
+				description:"不能与Qb12<br>同时拥有<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z*zz)},
+				//canAfford(){return hasupgrade('Qb',12)}
+				onPurchase(){z = z.mul(8) , zz = zz.mul(1e308)},
 				},
 				32:{
-				title:"32",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"保留Tb全部升级",
+				description:"不能与Qb11<br>同时拥有<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z*zz)},
+				onPurchase(){z = z.mul(8) , zz = zz.mul(1e308)},
 				},
 				33:{
-				title:"33",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"保留Wb里程碑",
+				description:"不能与Qb14<br>同时拥有<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z*zzz)},
+				onPurchase(){z = z.mul(8) , zzz = zzz.mul(1e308)},
 				},
 				34:{
-				title:"34",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"保留Tb里程碑",
+				description:"不能与Qb13<br>同时拥有<br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z*zzz)},
+				onPurchase(){z = z.mul(8) , zzz = zzz.mul(1e308)},
 				},
 				35:{
-				title:"35",
-				description:"1",
-				cost:new ExpantaNum(1),
+				title:"开启Qb41",
+				description:"暂未设定<br><br><br>价格增长：8×",
+				cost(){return new OmegaNum(100).mul(z)},
+				unlocked(){return hasUpgrade("Qb",31)&&hasUpgrade("Qb",32)&&hasUpgrade("Qb",33)&&hasUpgrade("Qb",34)},
+				onPurchase(){z = z.mul(8)},
 				},
 	},
 
@@ -1009,10 +1039,11 @@ addLayer("Q", { //主节点    0层
 		if(hasUpgrade("T",22)) var a = new ExpantaNum(0.015)//return 0.015
 		if(hasMilestone("T",5)) var a = new ExpantaNum(0.05)//return 0.05
 		if(hasUpgrade("W",21)) var a = new ExpantaNum(0.1)//return 0.1
+		if(hasUpgrade("Q",31)) var a = new ExpantaNum(0.2)
 		if (!inChallenge('ab',12)){
 		if(hasUpgrade("Tb",21)) var a = new ExpantaNum(0.5)//return 0.5
 		if(hasUpgrade("Wb",21)) var a = new ExpantaNum(1)}}
-		if(hasUpgrade("Q",31)) var a = new ExpantaNum(0.2)//return 1
+		//return 1
 		return a
        
         
@@ -1058,6 +1089,8 @@ doReset(resettingLayer) {
 					var k = hasUpgrade('Tb',31)
 					var h = hasChallenge('Wb',11)
 					var g = hasUpgrade('Wb',31)
+					var w = hasUpgrade('Qb',11)
+					var ww = hasUpgrade('Qb',12)
 
 					//var c = player.Q.points = new ExpantaNum(3)
         if (layers[resettingLayer].row > this.row) {
@@ -1068,6 +1101,8 @@ doReset(resettingLayer) {
 		if(c) player.Q.upgrades = [11,12,13,14,15,21,23];
 		if(f) player.Q.upgrades = [11,12,13,14,15,21,22,23];
 		if(f) player.Q.challenges = [11];
+		if(w)player.Wb.upgrades = [11,12,13,14,15,21,22,23,31];
+		if(ww)player.Tb.upgrades = [11,12,13,14,15,21,22,23,31];
 		if(d) player.Q.points = new ExpantaNum(10);
 		if(k) player.T.upgrades = [11,12,13,14,15];
 		if(h) player.T.upgrades = [11,12,13,14,15,21,22,23,31];

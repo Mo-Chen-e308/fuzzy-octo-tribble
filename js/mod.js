@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.3",
+	num: "0.1.8",
 	name: "",
 }
 
@@ -91,6 +91,9 @@ let changelog = `<h1>更新日志:</h1><br>
 		- 新增a节点3个挑战及ab节点3个挑战<br>
 		- 新增Qb节点及升级<br>
 		- 新增WbTb获取软上限<br>
+	<h2>v0.1.8</2><br>
+		- 别问我v0.1.4~v0.1.7去哪了<br>
+		- 修改很多瑕疵地方
 		
 		
 		
@@ -207,6 +210,10 @@ function getPointGen() {
 			if (hasChallenge('ab',11)) eff = eff.add(1).pow(2);
 			if (hasChallenge('ab',12)) eff = eff.add(1).pow(2);
 			if (hasChallenge('ab',21)) eff = eff.add(1).pow(1.5);
+			if (hasUpgrade('Qb',11)) eff = eff.add(1).pow(1.7);
+			if (hasUpgrade('Qb',12)) eff = eff.add(1).pow(1.8);
+			if (hasUpgrade('Qb',13)) eff = eff.add(1).pow(1.9);
+			if (hasUpgrade('Qb',14)) eff = eff.add(1).pow(2);
 			//////////////////////////////////////////////////////////////
 			eff = softcap(eff,new ExpantaNum(1e6),0.95)
 			eff = softcap(eff,new ExpantaNum(1e8),0.85)
@@ -221,10 +228,20 @@ function getPointGen() {
 			eff = softcap(eff,new ExpantaNum(1e62),0.48)
 			eff = softcap(eff,new ExpantaNum(1e68),0.45)
 			eff = softcap(eff,new ExpantaNum(1e76),0.42)
-			eff = softcap(eff,new ExpantaNum(1e84),0.4)
-			eff = softcap(eff,new ExpantaNum(1e94),0.38)
-			eff = softcap(eff,new ExpantaNum(1e102),0.35)
-			eff = softcap(eff,new ExpantaNum(1e116),0.32)
+			eff = softcap(eff,new ExpantaNum(1e82),0.40)
+			eff = softcap(eff,new ExpantaNum(1e88),0.38)
+			eff = softcap(eff,new ExpantaNum(1e94),0.35)
+			eff = softcap(eff,new ExpantaNum(1e100),0.33)
+			if(!hasUpgrade('Qb',23)){eff = softcap(eff,new ExpantaNum(1e108),0.3)}
+			if(hasUpgrade('Qb',23)){eff = softcap(eff,new ExpantaNum(1e124),0.3)}
+			if(!hasUpgrade('Qb',24)){eff = softcap(eff,new ExpantaNum(1e124),0.28)}
+			if(hasUpgrade('Qb',24)){eff = softcap(eff,new ExpantaNum(1e140),0.28)}
+			eff = softcap(eff,new ExpantaNum(1e146),0.25)
+			eff = softcap(eff,new ExpantaNum(1e152),0.23)
+			//eff = softcap(eff,new ExpantaNum(1e84),0.4)
+			//eff = softcap(eff,new ExpantaNum(1e94),0.38)
+			//eff = softcap(eff,new ExpantaNum(1e102),0.35)
+			//eff = softcap(eff,new ExpantaNum(1e116),0.32)
 			
  
 			//////////////////////////////////////////////////////////////////
@@ -252,6 +269,7 @@ function addedPlayerData() { return {
 var displayThings = [
 	function(){return"已添加软上限"},
 	function(){return"芜湖？(你翅膀掉了)"},
+	function(){return"作者陌尘QQ3168704134(2021.9.1已开学)"},
 ]
 
 // Determines when the game "ends"
