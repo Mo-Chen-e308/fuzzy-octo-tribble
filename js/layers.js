@@ -1044,7 +1044,7 @@ doReset(resettingLayer) {
 		},
 			12: {
         display() {return "<h2>合成一个H₂CO₃</h2><br>用1CO₂和1H₂O<br>和20个反应<br>合成一个H₂CO₃<br>并解锁H₂CO₃配方"},
-		unlocked(){return hasUpgrade("CO2",15)},
+		unlocked(){return hasUpgrade("H2O",15)},
 		canClick() {
 		var fy = player.R.points 
 		var CO = player.CO2.points
