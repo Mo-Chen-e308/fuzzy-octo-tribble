@@ -101,6 +101,11 @@ function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(0)
 	//let gain = new ExpantaNum(1)
 	let eff = player[this.layer].points.add(1).pow(0) 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	if (hasUpgrade('O',11)) eff = eff.mul(2);
+	if (hasUpgrade('H',11)) eff = eff.mul(2);
+	if (hasUpgrade('C',11)) eff = eff.mul(2);
+/////////////////////////////////////////////////////////////////////////////////////////////////
 		if (hasUpgrade('H2O',11)) eff = eff.mul((player.H2O.points**0.6)+1);
 			if (player.H2O.points > 1e6 && hasUpgrade('H2O',11)) eff = eff.pow(0.95);
 /////////////////////////////////////////////////////////////////////////////////////////////////
