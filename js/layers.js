@@ -1045,18 +1045,18 @@ doReset(resettingLayer) {
 		},
 		},
 			12: {
-        display() {return "<h2>合成一个CO₂</h2><br>用2C和1O<br>和10个反应<br>合成一个CO₂<br>并解锁CO₂配方"},
+        display() {return "<h2>合成一个CO₂</h2><br>用2O和1C<br>和10个反应<br>合成一个CO₂<br>并解锁CO₂配方"},
 		unlocked(){return hasUpgrade("H2O",15)},
 		canClick() {
 		var CC = player.C.points
 		var oo = player.O.points
 		var fy = player.R.points
-		if (CC >= 2)&&(oo >= 1)&&(fy >= 10))
+		if ((CC >= 1)&&(oo >= 2)&&(fy >= 10))
 		return true
 		},
 		onClick(){
-		player.C.points = player.C.points.sub(2)
-		player.O.points = player.O.points.sub(1)
+		player.C.points = player.C.points.sub(1)
+		player.O.points = player.O.points.sub(2)
 		player.R.points = player.R.points.sub(10)
 		player.CO2.points = player.CO2.points.add(1)
 		},
