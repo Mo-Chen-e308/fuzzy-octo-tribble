@@ -1043,8 +1043,25 @@ doReset(resettingLayer) {
 		},
 		},
 			12: {
-        display() {return "<h2>合成一个H₂CO₃</h2><br>用1CO₂和1H₂O<br>和20个反应<br>合成一个H₂CO₃<br>并解锁H₂CO₃配方"},
+        display() {return "<h2>合成一个CO₂</h2><br>用2C和1O<br>和10个反应<br>合成一个CO₂<br>并解锁CO₂配方"},
 		unlocked(){return hasUpgrade("H2O",15)},
+		canClick() {
+		var CC = player.C.points
+		var oo = player.O.points
+		var fy = player.R.points
+		if (CC >= 2)&&(oo >= 1)&&(fy >= 10))
+		return true
+		},
+		onClick(){
+		player.C.points = player.C.points.sub(2)
+		player.O.points = player.O.points.sub(1)
+		player.R.points = player.R.points.sub(10)
+		player.CO2.points = player.CO2.points.add(1)
+		},
+		},
+			13: {
+        display() {return "<h2>合成一个H₂CO₃</h2><br>用1CO₂和1H₂O<br>和20个反应<br>合成一个H₂CO₃<br>并解锁H₂CO₃配方"},
+		unlocked(){return hasUpgrade("CO2",15)},
 		canClick() {
 		var fy = player.R.points 
 		var CO = player.CO2.points
@@ -1059,7 +1076,7 @@ doReset(resettingLayer) {
 		player.H2CO3.points = player.H2CO3.points.add(1)
 		},
 		},
-			13: {
+			14: {
         display() {return "<h2>合成一个NaCl</h2><br>用1e6原子和100H2O<br>和100个反应<br>合成一个NaCl<br>并解锁NaCl配方"},
 		unlocked(){return hasUpgrade("H2CO3",15)},
 		canClick() {
@@ -1076,7 +1093,7 @@ doReset(resettingLayer) {
 		player.NaCl.points = player.NaCl.points.add(1)
 		},
 		},
-			14: {
+			15: {
         display() {return "<h2>分解一个NaCL</h2><br>用1e4C<br>和150个反应<br>获得一个Na<br>并解锁Na配方"},
 		unlocked(){return hasUpgrade("H2CO3",15)},
 		canClick() {
@@ -1093,7 +1110,7 @@ doReset(resettingLayer) {
 		player.Na.points = player.Na.points.add(1)
 		},
 		},
-			15: {
+			21: {
         display() {return "<h2>分解一个NaCL</h2><br>用1e4C<br>和150个反应<br>获得一个Cl<br>并解锁Cl配方"},
 		unlocked(){return hasUpgrade("Na",14)},
 		canClick() {
@@ -1110,7 +1127,7 @@ doReset(resettingLayer) {
 		player.Cl.points = player.Cl.points.add(1)
 		},
 		},
-			21: {
+			22: {
         display() {return "<h2>合成一个Na₂O</h2><br>用2Na和3O<br>和200个反应<br>合成一个Na₂O<br>并解锁Na₂O配方"},
 		unlocked(){return hasUpgrade("Cl",14)},
 		canClick() {
@@ -1127,7 +1144,7 @@ doReset(resettingLayer) {
 		player.Na2O.points = player.Na2O.points.add(1)
 		},
 		},
-			22: {
+			23: {
         display() {return "<h2>合成一个NaOH</h2><br>用2NaCl和1H2O<br>和500个反应<br>合成一个NaOH<br>并解锁NaOH配方"},
 		unlocked(){return hasUpgrade("Na2O",14)},
 		canClick() {
