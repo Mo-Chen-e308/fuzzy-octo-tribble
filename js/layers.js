@@ -22,6 +22,7 @@ addLayer("O", { //初始元素之一 氧Oxygen
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
+		if(hasUpgrade("HCl",12)) var a = new ExpantaNum(0.01)
 		
 		return a   
          },
@@ -30,6 +31,7 @@ doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="H2O") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="CO2") keep.push("best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="NaCl") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
@@ -106,7 +108,8 @@ addLayer("H", { //初始元素之一 氢Hydrogen
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
-		
+		if(hasUpgrade("HCl",13)) var a = new ExpantaNum(0.01)
+			
 		return a   
          },
 //////////////////////////////////////////////////////////////////////////////
@@ -114,6 +117,7 @@ doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="H2O") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="CO2") keep.push("best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="Na2O") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaCl") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
@@ -191,6 +195,7 @@ addLayer("C", { //初始元素之一 炭Charcoal
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
+		if(hasUpgrade("HCl",14)) var a = new ExpantaNum(0.01)
 		
 		return a   
          },
@@ -199,6 +204,7 @@ doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="H2O") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="CO2") keep.push("best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="Na2O") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaCl") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
@@ -286,6 +292,7 @@ doReset(resettingLayer) {
 				if (resettingLayer=="H2O") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="CO2") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="Na2O") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaCl") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
@@ -371,6 +378,7 @@ doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="H2O") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="CO2") keep.push("points","best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="Na2O") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="NaOH") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="NaCl") keep.push("best","total","milestones","upgrades");
@@ -423,7 +431,137 @@ doReset(resettingLayer) {
 				},
 			}
 })
-addLayer("H2CO3", { //合成元素之一 碳酸 H2CO3 Carbonic acid       //第二层    碳酸           H2CO3
+addLayer("HCl", { //合成元素之一 盐酸 HCl Hydrochloric acid       //第二层    盐酸           HCl
+    name: "Hydrochloric acid", 
+    symbol: "HCl",
+    position: 4, 
+    startData() { return {
+        unlocked:false,
+		points: new ExpantaNum(0),
+    }},
+    color: "#FFAF60",
+	requires: new ExpantaNum(5e12),
+    resource: "HCl",
+	baseResource: "原子",
+	baseAmount() {return player.points}, 
+    type: "normal",
+	branches: ["H","Cl"],
+	exponent() {
+		var HydrochloricAcid = new ExpantaNum(0)
+		if(hasUpgrade("HCl",12)) HydrochloricAcid = HydrochloricAcid.add(0.4)
+		if(hasUpgrade("HCl",13)) HydrochloricAcid = HydrochloricAcid.add(0.1)
+		if(hasUpgrade("HCl",14)) HydrochloricAcid = HydrochloricAcid.add(0.1)
+		return new ExpantaNum(0).add(HydrochloricAcid)},
+	effectDescription(){return `(Hydrochloric Acid)(盐酸)`},
+		layerShown(){return player[this.layer].unlocked || (hasUpgrade("NaOH",15))&&player.HCl.points > 0},
+//////////////////////////////////////////////////////////////////////////////
+		passiveGeneration(){
+		var a = new ExpantaNum(0)
+		
+		return a   
+         },
+//////////////////////////////////////////////////////////////////////////////
+doReset(resettingLayer) {
+        let keep = [];
+				
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
+				// var t = hasMilestone('T',6)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer,keep)
+			//if(t) player.T.milestones = [0,1,6];		
+		}
+		},
+///////////////////////////////////////////////////////////////////////////////
+    gainMult() { //获取该点数的加成
+        var eff = player[this.layer].points.add(1).pow(0) 
+			if(hasUpgrade("HCl",11)) eff = eff.mul(player.HCl.points**0.6+1)
+			
+        return eff
+    },
+    gainExp() { //获取改点数的指数
+        var eff = player[this.layer].points.add(1).pow(0) 
+		
+        return eff
+    },
+    row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+///////////////////////////////////////////////////////////////////////////////
+			upgrades:{
+				11:{
+				title:"终于！",
+				description:"加成Reaction获取<br>并且减少Reaction获取需求<br>并且加成HCl获取",
+				cost:new ExpantaNum(1),
+				//effect(){
+				//		let eff = player.HCl.points.add(1).pow(0)
+				//			if (hasUpgrade('HCl',11) && player.HCl.points < 2500) eff = eff.mul((player.HCl.points**0.6)+1);
+				//			if (hasUpgrade('HCl',11) && player.HCl.points > 2500) eff = eff.mul((2500**0.6+(player.HCl.points-2500)**0.1)+1);
+				//		return eff
+				//	},
+				//  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+				},
+				12:{
+				title:"起飞了起飞了",
+				description:"<br>每秒获得1%<br>可以重置的O<br>并且根据HCl<br>加成原子获取",
+				cost:new ExpantaNum(10),
+				//unlocked(){return hasUpgrade("C",11)},
+				effect(){
+						let eff = player.HCl.points.add(1).pow(0)
+							if (hasUpgrade('HCl',12) && player.HCl.points < 2500) eff = eff.mul((player.HCl.points**0.8)+1);
+							if (hasUpgrade('HCl',12) && player.HCl.points > 2500) eff = eff.mul((2500**0.8+(player.HCl.points-2500)**0.15)+1);
+						return eff
+					},
+				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+				},
+				13:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的H",
+				cost:new ExpantaNum(10),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				14:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的C",
+				cost:new ExpantaNum(10),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				15:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的H₂O",
+				cost:new ExpantaNum(100),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				21:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的CO₂",
+				cost:new ExpantaNum(100),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				22:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的H₂CO₃",
+				cost:new ExpantaNum(1000),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				23:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的NaCl",
+				cost:new ExpantaNum(1000),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				24:{
+				title:"起飞了起飞了！",
+				description:"<br>每秒获得1%<br>可以重置的Na₂O",
+				cost:new ExpantaNum(10000),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				25:{
+				title:"发现！",
+				description:"你发现拥有的<br>两个元素可以<br>发生一些反应····",
+				cost:new ExpantaNum(10000),
+				unlocked(){return hasUpgrade("HCl",24)},
+				},
+			}
+})
+addLayer("H2CO3", { //合成元素之一 碳酸 H2CO3 Carbonic acid       //第三层    碳酸           H2CO3
     name: "Carbonic Acid", 
     symbol: "H₂CO₃",
     position: 0, 
@@ -449,13 +587,14 @@ addLayer("H2CO3", { //合成元素之一 碳酸 H2CO3 Carbonic acid       //第�
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
+		if(hasUpgrade("HCl",22)) var a = new ExpantaNum(0.01)
 		
 		return a   
          },
 //////////////////////////////////////////////////////////////////////////////
 doReset(resettingLayer) {
         let keep = [];
-				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				// var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer,keep)
@@ -476,12 +615,12 @@ doReset(resettingLayer) {
 			upgrades:{
 				11:{
 				title:"终于！",
-				description:"根据H₂CO₃加成<br>原子获取<br>注：只重置三种基础元素点数",
+				description:"根据H₂CO₃加成<br>原子获取<br>",
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.H2CO3.points.add(1).pow(0)
-							if (hasUpgrade('H2CO3',11)) eff = eff.mul((player.H2CO3.points**0.75)+1);
-							if (player.CO2.points > 1e4 && hasUpgrade('H2CO3',11)) eff = eff.pow(0.85);
+							if (hasUpgrade('H2CO3',11) && player.H2CO3.points < 2500) eff = eff.mul((player.H2CO3.points**0.6)+1);
+							if (hasUpgrade('H2CO3',11) && player.H2CO3.points > 2500) eff = eff.mul((2500**0.6+(player.H2CO3.points-2500)**0.1)+1);
 						return eff
 					},
 				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -544,7 +683,7 @@ addLayer("NaOH", { //合成元素之一 氢氧化钠 NaOH Sodium Hydroxide  //�
 //////////////////////////////////////////////////////////////////////////////
 doReset(resettingLayer) {
         let keep = [];
-				//if (resettingLayer=="NaOH") keep.push("points","best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				// var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer,keep)
@@ -569,8 +708,8 @@ doReset(resettingLayer) {
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.NaOH.points.add(1).pow(0)
-							if (hasUpgrade('NaOH',11)) eff = eff.mul((player.NaOH.points**0.75)+1);
-							if (player.NaOH.points > 1e4 && hasUpgrade('NaOH',11)) eff = eff.pow(0.85);
+							if (hasUpgrade('NaOH',11) && player.NaOH.points < 2500) eff = eff.mul((player.NaOH.points**0.6)+1);
+							if (hasUpgrade('NaOH',11) && player.NaOH.points > 2500) eff = eff.mul((2500**0.6+(player.NaOH.points-2500)**0.1)+1);
 						return eff
 					},
 				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -601,7 +740,98 @@ doReset(resettingLayer) {
 				},
 			}
 })
-addLayer("Na2O", { //合成元素之一 氧化钠 Na2O Sodium Oxide        //第一层    氧化钠         Na2O
+addLayer("Na2CO3", { //合成元素之一 碳酸钠 Na2CO3 Sodium carbonate//第三层    碳酸钠         Na2CO3
+    name: "Sodium Carbonate", 
+    symbol: "<h5>Na₂CO₃",
+    position: 1, 
+    startData() { return {
+        unlocked:false,
+		points: new ExpantaNum(0),
+    }},
+    color: "#93FF93",
+	requires: new ExpantaNum(2e14),
+    resource: "Na₂CO₃",
+	baseResource: "原子",
+	baseAmount() {return player.points}, 
+    type: "normal",
+	branches: ["C","Na","O"],
+	exponent() {
+		var SodiumCarbonate = new ExpantaNum(0)
+		if(hasUpgrade("Na2O",12)) SodiumCarbonate = SodiumCarbonate.add(0.4)
+		if(hasUpgrade("Na2O",13)) SodiumCarbonate = SodiumCarbonate.add(0.1)
+		if(hasUpgrade("Na2O",14)) SodiumCarbonate = SodiumCarbonate.add(0.1)
+		return new ExpantaNum(0).add(SodiumCarbonate)},
+	effectDescription(){return `(SodiumCarbonate)(碳酸钠)`},
+		layerShown(){return player[this.layer].unlocked || (hasUpgrade("HCl",25))&& player.Na2CO3.points > 0},
+//////////////////////////////////////////////////////////////////////////////
+		passiveGeneration(){
+		var a = new ExpantaNum(0)
+		//if(hasUpgrade("HCl",24)) var a = new ExpantaNum(0.01)
+			
+		return a   
+         },
+//////////////////////////////////////////////////////////////////////////////
+doReset(resettingLayer) {
+        let keep = [];
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
+				// var t = hasMilestone('T',6)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer,keep)
+			//if(t) player.T.milestones = [0,1,6];		
+		}
+		},
+///////////////////////////////////////////////////////////////////////////////
+    gainMult() { //获取该点数的加成
+        var eff = player[this.layer].points.add(1).pow(0) 
+		
+        return eff
+    },
+    gainExp() { //获取改点数的指数
+        return new ExpantaNum(1)
+    },
+    row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+///////////////////////////////////////////////////////////////////////////////
+			upgrades:{
+				11:{
+				title:"终于！",
+				description:"根据Na₂CO₃加成<br>原子获取<br>",
+				cost:new ExpantaNum(1),
+				effect(){
+						let eff = player.Na2CO3.points.add(1).pow(0)
+							if (hasUpgrade('Na2CO3',11) && player.Na2CO3.points < 2500) eff = eff.mul((player.Na2CO3.points**0.65)+1);
+							if (hasUpgrade('Na2CO3',11) && player.Na2CO3.points > 2500) eff = eff.mul((2500**0.65+(player.Na2CO3.points-2500)**0.15)+1);
+						return eff
+					},
+				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+				},
+				12:{
+				title:"有碳酸钠了！",
+				description:"<br>你一次可以<br>获取更多Na₂CO₃",
+				cost:new ExpantaNum(3),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				13:{
+				title:"更多碳酸钠！",
+				description:"<br>你一次可以获得比Na₂CO₃12还多的Na₂CO₃",
+				cost:new ExpantaNum(5),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				14:{
+				title:"超多碳酸钠！",
+				description:"<br>你一次可以获得比Na₂CO₃13还多的Na₂CO₃",
+				cost:new ExpantaNum(12),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				15:{
+				title:"发现！",
+				description:"你发现拥有的<br>两个元素可以<br>发生一些反应····",
+				cost:new ExpantaNum(22),
+				unlocked(){return hasUpgrade("Na2CO3",14)},
+				},
+			}
+})
+addLayer("Na2O", { //合成元素之一 氧化钠 Na2O Sodium Oxide        //第三层    氧化钠         Na2O
     name: "Sodium Oxide", 
     symbol: "Na₂O",
     position: 3, 
@@ -627,7 +857,8 @@ addLayer("Na2O", { //合成元素之一 氧化钠 Na2O Sodium Oxide        //第
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
-		
+		if(hasUpgrade("HCl",24)) var a = new ExpantaNum(0.01)
+			
 		return a   
          },
 //////////////////////////////////////////////////////////////////////////////
@@ -635,6 +866,7 @@ doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				// var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer,keep)
@@ -655,12 +887,12 @@ doReset(resettingLayer) {
 			upgrades:{
 				11:{
 				title:"终于！",
-				description:"根据Na₂O加成<br>原子获取<br>注：只重置三种基础元素点数",
+				description:"根据Na₂O加成<br>原子获取<br>",
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.Na2O.points.add(1).pow(0)
-							if (hasUpgrade('Na2O',11)) eff = eff.mul((player.Na2O.points**0.65)+1);
-							if (player.Na2O.points > 1e4 && hasUpgrade('Na2O',11)) eff = eff.pow(0.9);
+							if (hasUpgrade('Na2O',11) && player.Na2O.points < 2500) eff = eff.mul((player.Na2O.points**0.6)+1);
+							if (hasUpgrade('Na2O',11) && player.Na2O.points > 2500) eff = eff.mul((2500**0.6+(player.Na2O.points-2500)**0.1)+1);
 						return eff
 					},
 				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -717,6 +949,7 @@ addLayer("CO2", { //合成元素之一 二氧化碳CO2 Carbon dioxide       //�
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
+		if(hasUpgrade("HCl",21)) var a = new ExpantaNum(0.01)
 		
 		return a   
          },
@@ -725,6 +958,7 @@ doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="NaOH") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="H2CO3") keep.push("best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				// var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer,keep)
@@ -749,8 +983,8 @@ doReset(resettingLayer) {
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.CO2.points.add(1).pow(0)
-							if (hasUpgrade('CO2',11)) eff = eff.mul((player.CO2.points**0.65)+1);
-							if (player.CO2.points > 1e4 && hasUpgrade('CO2',11)) eff = eff.pow(0.9);
+							if (hasUpgrade('CO2',11) && player.CO2.points < 2500) eff = eff.mul((player.CO2.points**0.6)+1);
+							if (hasUpgrade('CO2',11) && player.CO2.points > 2500) eff = eff.mul((2500**0.6+(player.CO2.points-2500)**0.1)+1);
 						return eff
 					},
 				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -807,14 +1041,16 @@ addLayer("H2O", { //合成元素之一 水H2O Water                      //第�
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
+		if(hasUpgrade("HCl",15)) var a = new ExpantaNum(0.01)
 		
 		return a   
          },
 //////////////////////////////////////////////////////////////////////////////
 doReset(resettingLayer) {
         let keep = [];
+				if (resettingLayer=="H2CO3") keep.push("best","total","milestones","upgrades");
 				if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
-				if (resettingLayer=="N2CP3") keep.push("best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				// var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
             layerDataReset(this.layer,keep)
@@ -839,8 +1075,9 @@ doReset(resettingLayer) {
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.H2O.points.add(1).pow(0)
-							if (hasUpgrade('H2O',11)) eff = eff.mul((player.H2O.points**0.6)+1);
-							if (player.H2O.points > 1e5 && hasUpgrade('H2O',11)) eff = eff.pow(0.95);
+							if (hasUpgrade('H2O',11) && player.H2O.points < 2500) eff = eff.mul((player.H2O.points**0.6)+1);
+							if (hasUpgrade('H2O',11) && player.H2O.points > 2500) eff = eff.mul((2500**0.6+(player.H2O.points-2500)**0.1)+1);
+							//eff = softcap(eff,new ExpantaNum(10000),0.1);
 						return eff
 					},
 				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -897,6 +1134,7 @@ addLayer("NaCl", { //合成元素之一 氯化钠NaCl Sodium Chloride      //第
 //////////////////////////////////////////////////////////////////////////////
 		passiveGeneration(){
 		var a = new ExpantaNum(0)
+		if(hasUpgrade("HCl",23)) var a = new ExpantaNum(0.01)
 		
 		return a   
          },
@@ -904,6 +1142,7 @@ addLayer("NaCl", { //合成元素之一 氯化钠NaCl Sodium Chloride      //第
 doReset(resettingLayer) {
         let keep = [];
 				if (resettingLayer=="NaOH") keep.push("points","best","total","milestones","upgrades");
+				if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
 				if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
 				// var t = hasMilestone('T',6)
         if (layers[resettingLayer].row > this.row) {
@@ -929,8 +1168,8 @@ doReset(resettingLayer) {
 				cost:new ExpantaNum(1),
 				effect(){
 						let eff = player.NaCl.points.add(1).pow(0)
-							if (hasUpgrade('NaCl',11)) eff = eff.mul((player.NaCl.points**0.7)+1);
-							if (player.NaCl.points > 1e5 && hasUpgrade('NaCl',11)) eff = eff.pow(0.9);
+							if (hasUpgrade('NaCl',11) && player.NaCl.points < 2500) eff = eff.mul((player.NaCl.points**0.6)+1);
+							if (hasUpgrade('NaCl',11) && player.NaCl.points > 2500) eff = eff.mul((2500**0.6+(player.NaCl.points-2500)**0.1)+1);
 						return eff
 					},
 				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
@@ -978,14 +1217,22 @@ addLayer("R", { //side类型小节点(反应)“R” Reaction
     color: "write",
 	requires:function(){
 		let Rea = new ExpantaNum(100)
-			Rea = Rea.mul(player.CO2.points**0.4+1)
-			Rea = Rea.mul(player.H2O.points**0.4+1)
-			Rea = Rea.mul(player.NaCl.points**0.4+1)
-			Rea = Rea.mul(player.H2CO3.points**0.4+1)
-			Rea = Rea.mul(player.NaCl.points**0.4+1)
-			Rea = Rea.mul(player.Na2O.points**0.4+1)
-			Rea = Rea.mul(player.NaOH.points**0.4+1)
-			if (hasUpgrade("NaCl",12))Rea = Rea.div(player.NaCl.points**0.5)
+			if(player.H2O.points < 100000) Rea = Rea.mul(player.H2O.points**0.4+1)
+			if(player.H2O.points > 99999) Rea = Rea.mul(player.H2O.points**0.3+1)
+				if(player.CO2.points < 100000) Rea = Rea.mul(player.CO2.points**0.4+1)
+				if(player.CO2.points > 99999) Rea = Rea.mul(player.CO2.points**0.3+1)
+			if(player.NaCl.points < 100000) Rea = Rea.mul(player.NaCl.points**0.4+1)
+			if(player.NaCl.points > 99999) Rea = Rea.mul(player.NaCl.points**0.3+1)
+				if(player.H2CO3.points < 100000) Rea = Rea.mul(player.H2CO3.points**0.4+1)
+				if(player.H2CO3.points > 99999) Rea = Rea.mul(player.H2CO3.points**0.3+1)
+			if(player.NaCl.points < 100000) Rea = Rea.mul(player.NaCl.points**0.4+1)
+			if(player.NaCl.points > 99999) Rea = Rea.mul(player.NaCl.points**0.3+1)
+				if(player.Na2O.points < 100000) Rea = Rea.mul(player.Na2O.points**0.4+1)
+				if(player.Na2O.points > 99999) Rea = Rea.mul(player.Na2O.points**0.3+1)
+			if(player.NaOH.points < 100000) Rea = Rea.mul(player.NaOH.points**0.4+1)
+			if(player.NaOH.points > 99999) Rea = Rea.mul(player.NaOH.points**0.3+1)
+			if (hasUpgrade("NaCl",12))Rea = Rea.div(player.NaCl.points**0.45)
+			if (hasUpgrade("HCl",11)) Rea = Rea.div(player.HCl.points**0.5)
 		
 		return Rea
 	},
@@ -994,7 +1241,7 @@ addLayer("R", { //side类型小节点(反应)“R” Reaction
 	baseAmount() {return player.points}, 
     type: "normal",
 	exponent:0,
-	effectDescription(){return `(反应)<br>用你拥有的元素来合成新的元素！<br>获取反应的需求根据你拥有的元素变化！<br>每次最多获得1合成！`},
+	effectDescription(){return `(反应)<br>用你拥有的元素来合成新的元素！<br>获取反应的需求根据你拥有的元素变化！<br>`},
 		//layerShown(){return player[this.layer].unlocked || (hasUpgrade("C",14))},
 //////////////////////////////////////////////////////////////////////////////
 /*
@@ -1017,6 +1264,7 @@ doReset(resettingLayer) {
 ///////////////////////////////////////////////////////////////////////////////
     gainMult() { //获取该点数的加成
         var eff = player[this.layer].points.add(1).pow(0) 
+			if(hasUpgrade("HCl",11)) eff = eff.mul(player.HCl.points**0.5)
 		
         return eff
     },
@@ -1029,7 +1277,7 @@ doReset(resettingLayer) {
 		clickables: {
 			11: {
         display() {return "<h2>合成一个H₂O</h2><br>用2H和1O<br>和5个反应<br>合成一个H₂O<br>并解锁H₂O配方"},
-		unlocked(){return hasUpgrade("C",14)},
+		unlocked(){return hasUpgrade("C",14)|| player.H2O.points > 0},
 		canClick() {
 		var hh = player.H.points
 		var oo = player.O.points
@@ -1046,7 +1294,7 @@ doReset(resettingLayer) {
 		},
 			12: {
         display() {return "<h2>合成一个CO₂</h2><br>用2O和1C<br>和10个反应<br>合成一个CO₂<br>并解锁CO₂配方"},
-		unlocked(){return hasUpgrade("H2O",15)},
+		unlocked(){return hasUpgrade("H2O",15)|| player.CO2.points > 0},
 		canClick() {
 		var CC = player.C.points
 		var oo = player.O.points
@@ -1063,7 +1311,7 @@ doReset(resettingLayer) {
 		},
 			13: {
         display() {return "<h2>合成一个H₂CO₃</h2><br>用1CO₂和1H₂O<br>和20个反应<br>合成一个H₂CO₃<br>并解锁H₂CO₃配方"},
-		unlocked(){return hasUpgrade("CO2",15)},
+		unlocked(){return hasUpgrade("CO2",15)|| player.H2CO3.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var CO = player.CO2.points
@@ -1080,7 +1328,7 @@ doReset(resettingLayer) {
 		},
 			14: {
         display() {return "<h2>合成一个NaCl</h2><br>用1e6原子和100H2O<br>和100个反应<br>合成一个NaCl<br>并解锁NaCl配方"},
-		unlocked(){return hasUpgrade("H2CO3",15)},
+		unlocked(){return hasUpgrade("H2CO3",15)|| player.NaCl.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var H2 = player.H2O.points
@@ -1097,7 +1345,7 @@ doReset(resettingLayer) {
 		},
 			15: {
         display() {return "<h2>分解一个NaCL</h2><br>用1e4C<br>和150个反应<br>获得一个Na<br>并解锁Na配方"},
-		unlocked(){return hasUpgrade("H2CO3",15)},
+		unlocked(){return hasUpgrade("NaCl",21)|| player.Na.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var CC = player.C.points
@@ -1114,7 +1362,7 @@ doReset(resettingLayer) {
 		},
 			21: {
         display() {return "<h2>分解一个NaCL</h2><br>用1e4C<br>和150个反应<br>获得一个Cl<br>并解锁Cl配方"},
-		unlocked(){return hasUpgrade("Na",14)},
+		unlocked(){return hasUpgrade("Na",14)|| player.Cl.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var CC = player.C.points
@@ -1131,7 +1379,7 @@ doReset(resettingLayer) {
 		},
 			22: {
         display() {return "<h2>合成一个Na₂O</h2><br>用2Na和3O<br>和200个反应<br>合成一个Na₂O<br>并解锁Na₂O配方"},
-		unlocked(){return hasUpgrade("Cl",14)},
+		unlocked(){return hasUpgrade("Cl",14)|| player.Na2O.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var NNA = player.Na.points
@@ -1148,7 +1396,7 @@ doReset(resettingLayer) {
 		},
 			23: {
         display() {return "<h2>合成一个NaOH</h2><br>用2NaCl和1H2O<br>和500个反应<br>合成一个NaOH<br>并解锁NaOH配方"},
-		unlocked(){return hasUpgrade("Na2O",14)},
+		unlocked(){return hasUpgrade("Na2O",14)|| player.NaOH.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var NAC = player.NaCl.points
@@ -1161,6 +1409,42 @@ doReset(resettingLayer) {
 		player.R.points = player.R.points.sub(500)
 		player.H2O.points = player.H2O.points.sub(1)
 		player.NaOH.points = player.NaOH.points.add(1)
+		},
+		},
+			24: {
+        display() {return "<h2>合成一个HCl</h2><br>用2H2Cl<br>和750个反应<br>合成一个HCl<br>并解锁HCl配方"},
+		unlocked(){return hasUpgrade("NaOH",15)|| player.HCl.points > 0},
+		canClick() {
+		var fy = player.R.points 
+		var HH = player.H.points
+		var CCL = player.Cl.points
+		if ((HH >= 2)&&(fy >= 750)&&(CCL >= 2))
+		return true
+		},
+		onClick(){
+		player.H.points = player.H.points.sub(2)
+		player.R.points = player.R.points.sub(750)
+		player.Cl.points = player.Cl.points.sub(2)
+		player.HCl.points = player.HCl.points.add(1)
+		},
+		},
+			25: {
+        display() {return "<h2>合成一个Na₂CO₃</h2><br>用4Na2C2O<br>和2000个反应<br>合成一个Na₂CO₃<br>并解锁Na₂CO₃配方"},
+		unlocked(){return hasUpgrade("HCl",25)|| player.Na2CO3.points > 0},
+		canClick() {
+		var fy = player.R.points 
+		var NNA = player.Na.points
+		var CC = player.C.points
+		var OO = player.O.points
+		if ((CC >= 2)&&(fy >= 2000)&&(NNA >= 4)&&(OO >= 2))
+		return true
+		},
+		onClick(){
+		player.O.points = player.O.points.sub(2)
+		player.R.points = player.R.points.sub(2000)
+		player.C.points = player.C.points.sub(2)
+		player.Na.points = player.Na.points.sub(4)
+		player.Na2CO3.points = player.Na2CO3.points.add(1)
 		},
 		},
 		

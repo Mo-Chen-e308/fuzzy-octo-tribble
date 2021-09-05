@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "v0.2.1-beta-1.1",
+	num: "0.2.5",
 	name: "",
 }
 
@@ -57,7 +57,26 @@ let changelog = `<h1>更新日志：</h1><br>
 		- 加了软上限！！！<br>
 		- 新增NaOH层升级<br>
 	<h3>v0.2.1-beta-1.1</h3><br>
-		- 修复了不能获取CO2的bug
+		- 修复了不能获取CO2的bug<br>
+	<h3>v0.2.1-beta-1.2</h3><br>
+		- 修复了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多bug<br>
+	<h3>v0.2.1-beta-1.3</h3><br>
+		- 新添盐酸框架<br>
+	<h3>v0.2.1-beta-1.4</h3><br>
+		- 修复了不能获取CO2的bug<br>
+	<h3>v0.2.1-beta-1.5</h3><br>
+		- 修新添盐酸升级<br>
+	<h3>v0.2.1-beta-2.1</h3><br>
+		- 优化反应获取<br>
+	<h3>v0.2.1-beta-2.2</h3><br>
+		- 新添碳酸钠的框架<br>
+	<h3>v0.2.1-beta-2.3</h3><br>
+		- 新添碳酸钠的升级<br>
+	<h3>v0.2.5</h3><br>
+		- 不要问我v0.2.2~v0.2.4去哪了<br>
+		- 优化了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多升级<br>
+		- 改善了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多需求<br>
+		- 新添了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多软上限<br>
 		
 		
 		
@@ -108,29 +127,36 @@ function getPointGen() {
 	if (hasUpgrade('H',11)) eff = eff.mul(2);
 	if (hasUpgrade('C',11)) eff = eff.mul(2);
 /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (hasUpgrade('H2O',11)) eff = eff.mul((player.H2O.points**0.6)+1);
-			if (player.H2O.points > 1e6 && hasUpgrade('H2O',11)) eff = eff.pow(0.95);
+		if (hasUpgrade('H2O',11) && player.H2O.points < 2500) eff = eff.mul((player.H2O.points**0.6)+1);
+		if (hasUpgrade('H2O',11) && player.H2O.points > 2500) eff = eff.mul((2500**0.6+(player.H2O.points-2500)**0.1)+1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (hasUpgrade('CO2',11)) eff = eff.mul((player.CO2.points**0.65)+1);
-			if (player.CO2.points > 1e5 && hasUpgrade('CO2',11)) eff = eff.pow(0.9);
+		if (hasUpgrade('CO2',11) && player.CO2.points < 2500) eff = eff.mul((player.CO2.points**0.6)+1);
+		if (hasUpgrade('CO2',11) && player.CO2.points > 2500) eff = eff.mul((2500**0.6+(player.CO2.points-2500)**0.1)+1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (hasUpgrade('NaCl',11)) eff = eff.mul((player.NaCl.points**0.7)+1);
-			if (player.NaCl.points > 1e5 && hasUpgrade('NaCl',11)) eff = eff.pow(0.9);
+		if (hasUpgrade('NaCl',11) && player.NaCl.points < 2500) eff = eff.mul((player.NaCl.points**0.6)+1);
+		if (hasUpgrade('NaCl',11) && player.NaCl.points > 2500) eff = eff.mul((2500**0.6+(player.NaCl.points-2500)**0.1)+1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (hasUpgrade('H2CO3',11)) eff = eff.mul((player.H2CO3.points**0.75)+1);
-			if (player.CO2.points > 1e4 && hasUpgrade('H2CO3',11)) eff = eff.pow(0.85);
+		if (hasUpgrade('H2CO3',11) && player.H2CO3.points < 2500) eff = eff.mul((player.H2CO3.points**0.6)+1);
+		if (hasUpgrade('H2CO3',11) && player.H2CO3.points > 2500) eff = eff.mul((2500**0.6+(player.H2CO3.points-2500)**0.1)+1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (hasUpgrade('Na2O',11)) eff = eff.mul((player.Na2O.points**0.65)+1);
-			if (player.Na2O.points > 1e4 && hasUpgrade('Na2O',11)) eff = eff.pow(0.9);
+		if (hasUpgrade('Na2O',11) && player.Na2O.points < 2500) eff = eff.mul((player.Na2O.points**0.6)+1);
+		if (hasUpgrade('Na2O',11) && player.Na2O.points > 2500) eff = eff.mul((2500**0.6+(player.Na2O.points-2500)**0.1)+1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (hasUpgrade('NaOH',11)) eff = eff.mul((player.NaOH.points**0.75)+1);
-			if (player.NaOH.points > 1e4 && hasUpgrade('NaOH',11)) eff = eff.pow(0.85);
-			
-			
-			eff = softcap(eff,new ExpantaNum(1e8),0.95)
+		if (hasUpgrade('NaOH',11) && player.NaOH.points < 2500) eff = eff.mul((player.NaOH.points**0.6)+1);
+		if (hasUpgrade('NaOH',11) && player.NaOH.points > 2500) eff = eff.mul((2500**0.6+(player.NaOH.points-2500)**0.1)+1);
+/////////////////////////////////////////////////////////////////////////////////////////////////
+		if (hasUpgrade('HCl',12) && player.HCl.points < 2500) eff = eff.mul((player.HCl.points**0.8)+1);
+		if (hasUpgrade('HCl',12) && player.HCl.points > 2500) eff = eff.mul((2500**0.8+(player.HCl.points-2500)**0.15)+1);
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		if (hasUpgrade('Na2CO3',11) && player.Na2CO3.points < 2500) eff = eff.mul((player.Na2CO3.points**0.65)+1);
+		if (hasUpgrade('Na2CO3',11) && player.Na2CO3.points > 2500) eff = eff.mul((2500**0.65+(player.Na2CO3.points-2500)**0.15)+1);
+		
+		
 			eff = softcap(eff,new ExpantaNum(1e9),0.85)
-			eff = softcap(eff,new ExpantaNum(1e10),0.75)
-			eff = softcap(eff,new ExpantaNum(1e15),0.6)
+			eff = softcap(eff,new ExpantaNum(1e10),0.85)
+			eff = softcap(eff,new ExpantaNum(1e11),0.85)
+			eff = softcap(eff,new ExpantaNum(1e12),0.8)
+			
 			//eff = softcap(eff,new ExpantaNum(1e9),0.98)
 			//eff = softcap(eff,new ExpantaNum(1e9),0.98)
 			//eff = softcap(eff,new ExpantaNum(1e9),0.98)
@@ -153,7 +179,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return"v0.0.1还未添加软上限"},
+	function(){return"当前endgame约(秒产1e14原子)(碳酸钠升级买完)"},
 	function(){return"v0.1.5已经添加软上限"},
 	function(){return"作者陌尘QQ3168704134(2021.9.1已开学)"},
 ]
