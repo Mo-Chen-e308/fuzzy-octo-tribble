@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2",
+	num: "v0.2.1-beta-1.1",
 	name: "",
 }
 
@@ -56,6 +56,8 @@ let changelog = `<h1>更新日志：</h1><br>
 		- 加了软上限！！！<br>
 		- 加了软上限！！！<br>
 		- 新增NaOH层升级<br>
+	<h3>v0.2.1-beta-1.1</h3><br>
+		- 修复了不能获取CO2的bug
 		
 		
 		

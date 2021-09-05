@@ -983,6 +983,8 @@ addLayer("R", { //side类型小节点(反应)“R” Reaction
 			Rea = Rea.mul(player.NaCl.points**0.4+1)
 			Rea = Rea.mul(player.H2CO3.points**0.4+1)
 			Rea = Rea.mul(player.NaCl.points**0.4+1)
+			Rea = Rea.mul(player.Na2O.points**0.4+1)
+			Rea = Rea.mul(player.NaOH.points**0.4+1)
 			if (hasUpgrade("NaCl",12))Rea = Rea.div(player.NaCl.points**0.5)
 		
 		return Rea
