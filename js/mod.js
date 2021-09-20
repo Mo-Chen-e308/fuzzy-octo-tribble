@@ -1,6 +1,6 @@
 ﻿let modInfo = {
 	name: "The Chemistry Tree",
-	id: "化学树",
+	id: "2021.9.20 v0.2.5.1 (获得重置点不保留任何)",
 	author: "陌尘",
 	pointsName: "原子",
 	discordName: "",
@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2.5",
+	num: "0.2.5.1",
 	name: "",
 }
 
@@ -77,6 +77,9 @@ let changelog = `<h1>更新日志：</h1><br>
 		- 优化了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多升级<br>
 		- 改善了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多需求<br>
 		- 新添了好多好多好多好多好多好多好好多多好多好多好多好多好多好多好多好多软上限<br>
+	<h3>v0.2.5.1</h3><br>
+		- 改为全部节点重置<br>
+		- 添加CO节点及升级
 		
 		
 		
@@ -147,9 +150,13 @@ function getPointGen() {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 		if (hasUpgrade('HCl',12) && player.HCl.points < 2500) eff = eff.mul((player.HCl.points**0.8)+1);
 		if (hasUpgrade('HCl',12) && player.HCl.points > 2500) eff = eff.mul((2500**0.8+(player.HCl.points-2500)**0.15)+1);
-		/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 		if (hasUpgrade('Na2CO3',11) && player.Na2CO3.points < 2500) eff = eff.mul((player.Na2CO3.points**0.65)+1);
 		if (hasUpgrade('Na2CO3',11) && player.Na2CO3.points > 2500) eff = eff.mul((2500**0.65+(player.Na2CO3.points-2500)**0.15)+1);
+/////////////////////////////////////////////////////////////////////////////////////////////////
+		if (hasUpgrade('CO',11) && player.CO.points < 2500) eff = eff.mul((player.CO.points**0.6)+1);
+		if (hasUpgrade('CO',11) && player.CO.points > 2500) eff = eff.mul((2500**0.6+(player.CO.points-2500)**0.1)+1);
+/////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
 			eff = softcap(eff,new ExpantaNum(1e9),0.85)
@@ -179,8 +186,8 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return"当前endgame约(秒产1e14原子)(碳酸钠升级买完)"},
-	function(){return"v0.1.5已经添加软上限"},
+	function(){return"当前endgame约(秒产1e17原子)(一氧化碳升级买完)"},
+	function(){return"v0.1.5已经添加软上限 v0.2.5.1版本已大改"},
 	function(){return"作者陌尘QQ3168704134(2021.9.1已开学)"},
 ]
 
