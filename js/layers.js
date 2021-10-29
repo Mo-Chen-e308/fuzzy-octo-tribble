@@ -708,7 +708,7 @@ doReset(resettingLayer) {
 				},
 			}
 })
-addLayer("Na2CO3", { //合成元素之一 碳酸钠 Na2CO3 Sodium carbonate//第三层    碳酸钠         Na2CO3
+addLayer("Na2CO3", { //合成元素之一 碳酸钠 Na2CO3 Sodium carbonate//第三层    碳酸钠         Na2CO3  //玻璃
     name: "Sodium Carbonate", 
     symbol: "<h5>Na₂CO₃",
     position: 1, 
@@ -889,7 +889,7 @@ doReset(resettingLayer) {
 				},
 			}
 })
-addLayer("CO", { //合成元素之一 一氧化碳 CO Sodium Oxide        //第三层    一氧化碳         CO
+addLayer("CO", { //合成元素之一 一氧化碳 CO Sodium Oxide       	  //第三层    一氧化碳       CO
     name: "Carbon Monoxide", 
     symbol: "CO",
     position: 0, 
@@ -978,6 +978,190 @@ doReset(resettingLayer) {
 				description:"你发现拥有的<br>两个元素可以<br>发生一些反应····",
 				cost:new ExpantaNum(22),
 				unlocked(){return hasUpgrade("CO",14)},
+				},
+			}
+})
+addLayer("SO", { //合成元素之一 一氧化硫 SO Sulfur Monoxide    	  //第四层    一氧化硫       SO
+    name: "Sulfur Monoxide", 
+    symbol: "SO",
+    position: 0, 
+    startData() { return {
+        unlocked:false,
+		points: new ExpantaNum(0),
+    }},
+    color: "#FFD306",
+	requires: new ExpantaNum(1e17),
+    resource: "SO",
+	baseResource: "原子",
+	baseAmount() {return player.points}, 
+    type: "normal",
+	branches: ["C","O","H2O"],
+	exponent() {
+		var SulfurMonoxide = new ExpantaNum(0)
+		if(hasUpgrade("SO",12)) SulfurMonoxide = SulfurMonoxide.add(0.4)
+		if(hasUpgrade("SO",13)) SulfurMonoxide = SulfurMonoxide.add(0.1)
+		if(hasUpgrade("SO",14)) SulfurMonoxide = SulfurMonoxide.add(0.1)
+		return new ExpantaNum(0).add(SulfurMonoxide)},
+	effectDescription(){return `(Sulfur Monoxide)(一氧化硫)`},
+		layerShown(){return player[this.layer].unlocked || (hasUpgrade("CO",15))&& player.SO.points > 0},
+//////////////////////////////////////////////////////////////////////////////
+		passiveGeneration(){
+		var a = new ExpantaNum(0)
+		//if(hasUpgrade("HCl",24)) var a = new ExpantaNum(0.01)
+			
+		return a   
+         },
+//////////////////////////////////////////////////////////////////////////////
+doReset(resettingLayer) {
+        let keep = [];
+				//if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
+				//if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
+				// var t = hasMilestone('T',6)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer,keep)
+			//if(t) player.T.milestones = [0,1,6];		
+		}
+		},
+///////////////////////////////////////////////////////////////////////////////
+    gainMult() { //获取该点数的加成
+        var eff = player[this.layer].points.add(1).pow(0) 
+		
+        return eff
+    },
+    gainExp() { //获取改点数的指数
+        return new ExpantaNum(1)
+    },
+    row: 3, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+///////////////////////////////////////////////////////////////////////////////
+			upgrades:{
+				11:{
+				title:"终于！",
+				description:"根据SO加成<br>原子获取<br>",
+				cost:new ExpantaNum(1),
+				effect(){
+						let eff = player.SO.points.add(1).pow(0)
+							if (hasUpgrade('SO',11) && player.SO.points < 2500) eff = eff.mul((player.SO.points**10)+1);
+							if (hasUpgrade('SO',11) && player.SO.points > 2500) eff = eff.mul((2500**10+(player.SO.points-2500)**2.5)+1);
+						return eff
+					},
+				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+				},
+				12:{
+				title:"真实的污染",
+				description:"<br>你一次可以<br>获取更多SO",
+				cost:new ExpantaNum(3),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				13:{
+				title:"真·更多的污染",
+				description:"<br>你一次可以获得比SO12还多的SO",
+				cost:new ExpantaNum(5),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				14:{
+				title:"真·超多污染！",
+				description:"<br>你一次可以获得比SO13还多的SO",
+				cost:new ExpantaNum(12),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				15:{
+				title:"发现！",
+				description:"你发现拥有的<br>两个元素可以<br>发生一些反应····",
+				cost:new ExpantaNum(22),
+				unlocked(){return hasUpgrade("SO",14)},
+				},
+			}
+})
+addLayer("S", { //合成元素之一 硫 S Sulfur                  	  //第三层    硫             S
+    name: "Sulfur", 
+    symbol: "S",
+    position: 0, 
+    startData() { return {
+        unlocked:false,
+		points: new ExpantaNum(0),
+    }},
+    color: "#FFE153",
+	requires: new ExpantaNum(1e16),
+    resource: "S",
+	baseResource: "原子",
+	baseAmount() {return player.points}, 
+    type: "normal",
+	branches: ["SO","H2O"],
+	exponent() {
+		var Sulfur = new ExpantaNum(0)
+		if(hasUpgrade("S",12)) Sulfur = Sulfur.add(0.4)
+		if(hasUpgrade("S",13)) Sulfur = Sulfur.add(0.1)
+		if(hasUpgrade("S",14)) Sulfur = Sulfur.add(0.1)
+		return new ExpantaNum(0).add(Sulfur)},
+	effectDescription(){return `(Sulfur)(硫)`},
+		layerShown(){return player[this.layer].unlocked || (hasUpgrade("SO",15))&& player.S.points > 0},
+//////////////////////////////////////////////////////////////////////////////
+		passiveGeneration(){
+		var a = new ExpantaNum(0)
+		//if(hasUpgrade("HCl",24)) var a = new ExpantaNum(0.01)
+			
+		return a   
+         },
+//////////////////////////////////////////////////////////////////////////////
+doReset(resettingLayer) {
+        let keep = [];
+				//if (resettingLayer=="NaOH") keep.push("best","total","milestones","upgrades");
+				//if (resettingLayer=="H2CO3") keep.push("points","best","total","milestones","upgrades");
+				//if (resettingLayer=="Na2CO3") keep.push("points","best","total","milestones","upgrades");
+				// var t = hasMilestone('T',6)
+        if (layers[resettingLayer].row > this.row) {
+            layerDataReset(this.layer,keep)
+			//if(t) player.T.milestones = [0,1,6];		
+		}
+		},
+///////////////////////////////////////////////////////////////////////////////
+    gainMult() { //获取该点数的加成
+        var eff = player[this.layer].points.add(1).pow(0) 
+		
+        return eff
+    },
+    gainExp() { //获取改点数的指数
+        return new ExpantaNum(1)
+    },
+    row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
+///////////////////////////////////////////////////////////////////////////////
+			upgrades:{
+				11:{
+				title:"终于！",
+				description:"根据S加成<br>原子获取<br>",
+				cost:new ExpantaNum(1),
+				effect(){
+						let eff = player.O.points.add(1).pow(0)
+							if (hasUpgrade('S',11) && player.S.points < 2500) eff = eff.mul((player.S.points**2.5)+1);
+							if (hasUpgrade('S',11) && player.S.points > 2500) eff = eff.mul((2500**2.5+(player.S.points-2500)**1.5)+1);
+						return eff
+					},
+				  effectDisplay(){return format(upgradeEffect(this.layer,this.id))+"×"}
+				},
+				12:{
+				title:"真实污染",
+				description:"<br>你一次可以<br>获取更多S",
+				cost:new ExpantaNum(3),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				13:{
+				title:"真·更多污染",
+				description:"<br>你一次可以获得比S12还多的S",
+				cost:new ExpantaNum(5),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				14:{
+				title:"真·超多污染！",
+				description:"<br>你一次可以获得比S13还多的S",
+				cost:new ExpantaNum(12),
+				//unlocked(){return hasUpgrade("C",11)},
+				},
+				15:{
+				title:"发现！",
+				description:"你发现拥有的<br>两个元素可以<br>发生一些反应····",
+				cost:new ExpantaNum(22),
+				unlocked(){return hasUpgrade("S",14)},
 				},
 			}
 })
@@ -1500,80 +1684,65 @@ doReset(resettingLayer) {
 		},
 		},
 		31: {
-        display() {return "<h2>燃烧不充分<br>生成了一些CO</h2><br>用1e10C1e11O1e10H₂O<br>和10000个反应<br>反应一些CO<br>并解锁CO配方"},
+        display() {return "<h2>燃烧不充分<br>生成了一些CO</h2><br>用1e10C1e10O1e10H₂O<br>和5000个反应<br>反应一些CO<br>并解锁CO配方"},
 		unlocked(){return hasUpgrade("Na2CO3",15)|| player.CO.points > 0},
 		canClick() {
 		var fy = player.R.points 
 		var water = player.H2O.points
 		var CC = player.C.points
 		var OO = player.O.points
-		if ((CC >= 1e100)&&(fy >= 10000)&&(water >= 1e10)&&(OO >= 1e11))
+		if ((CC >= 1e10)&&(fy >= 5000)&&(water >= 1e10)&&(OO >= 1e10))
 		return true
 		},
 		onClick(){
-		player.O.points = player.O.points.sub(1e11)
-		player.R.points = player.R.points.sub(10000)
+		player.O.points = player.O.points.sub(1e1)
+		player.R.points = player.R.points.sub(5000)
 		player.C.points = player.C.points.sub(1e10)
 		player.H2O.points = player.H2O.points.sub(1e10)
 		player.CO.points = player.CO.points.add(1)
 		},
 		},
+		32: {
+        display() {return "<h2>燃烧不充分<br>生成了一些SO</h2><br>用1e10C1e10O1e10H₂O<br>和5000个反应<br>反应一些SO<br>并解锁SO配方"},
+		unlocked(){return hasUpgrade("CO",15)|| player.SO.points > 0},
+		canClick() {
+		var fy = player.R.points 
+		var water = player.H2O.points
+		var CC = player.C.points
+		var OO = player.O.points
+		if ((CC >= 1e10)&&(fy >= 5000)&&(water >= 1e10)&&(OO >= 1e10))
+		return true
+		},
+		onClick(){
+		player.O.points = player.O.points.sub(1e10)
+		player.R.points = player.R.points.sub(5000)
+		player.C.points = player.C.points.sub(1e10)
+		player.H2O.points = player.H2O.points.sub(1e10)
+		player.SO.points = player.SO.points.add(1)
+		},
+		},
+		33: {
+        display() {return "<h2>分解反应<br>分解了一些S</h2><br>用1e10O100SO<br>和10000个反应<br>分解一些S<br>并解锁S配方"},
+		unlocked(){return hasUpgrade("SO",15)|| player.S.points > 0},
+		canClick() {
+		var fy = player.R.points 
+		var OO = player.O.points
+		if ((fy >= 10000)&&(OO >= 1e11))
+		return true
+		},
+		onClick(){
+		player.O.points = player.O.points.sub(1e10)
+		player.SO.points = player.SO.points.sub(100)
+		player.R.points = player.R.points.sub(10000)
+		player.S.points = player.S.points.add(1)
+		},
+		},
 		
 		},
 })
-/*
-addLayer("1", { //side类型小节点(反应)“R” Reaction
-    name: "1", 
-    symbol: "✦",
-    position: -1, 
-    startData() { return {
-        unlocked:true,
-		points: new ExpantaNum(0),
-    }},
-    color: "write",
-	requires:function(){
-		let Rea = new ExpantaNum(1)
-		return Rea
-	},
-    resource: "Reaction",
-	baseResource: "原子",
-	baseAmount() {return player.points}, 
-    type: "normal",
-	exponent:0,
-	effectDescription(){return `(反应)<br>用你拥有的元素来合成新的元素！<br>获取反应的需求根据你拥有的元素变化！<br>`},
-		//layerShown(){return player[this.layer].unlocked || (hasUpgrade("C",14))},
-//////////////////////////////////////////////////////////////////////////////
 
-		passiveGeneration(){
-		var a = new ExpantaNum(0)
-		
-		return a   
-         },
-		 
-//////////////////////////////////////////////////////////////////////////////
-doReset(resettingLayer) {
-        let keep = [];
-				//if (resettingLayer=="bm") keep.push("points","best","total","milestones","upgrades");
-				// var t = hasMilestone('T',6)
-        if (layers[resettingLayer].row > this.row) {
-            layerDataReset(this.layer,keep)
-			//if(t) player.T.milestones = [0,1,6];		
-		}
-		},
-///////////////////////////////////////////////////////////////////////////////
-    gainMult() { //获取该点数的加成
-        var eff = player[this.layer].points.add(1).pow(0) 
-		
-        return eff
-    },
-    gainExp() { //获取该点数的指数
-        return new ExpantaNum(1)
-    },
-    row: "side", // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
-///////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
 
-})
-*/
+
+
 /*
 */

@@ -123,6 +123,7 @@ function canGenPoints(){
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(0)
+		//player.devSpeed=1000
 	//let gain = new ExpantaNum(1)
 	let eff = player[this.layer].points.add(1).pow(0) 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +158,11 @@ function getPointGen() {
 		if (hasUpgrade('CO',11) && player.CO.points < 2500) eff = eff.mul((player.CO.points**0.6)+1);
 		if (hasUpgrade('CO',11) && player.CO.points > 2500) eff = eff.mul((2500**0.6+(player.CO.points-2500)**0.1)+1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
+		if (hasUpgrade('SO',11) && player.SO.points < 2500) eff = eff.mul((player.SO.points**10)+1);
+		if (hasUpgrade('SO',11) && player.SO.points > 2500) eff = eff.mul((2500**10+(player.SO.points-2500)**2.5)+1);
+/////////////////////////////////////////////////////////////////////////////////////////////////
+		if (hasUpgrade('S',11) && player.S.points < 2500) eff = eff.mul((player.S.points**2.5)+1);
+		if (hasUpgrade('S',11) && player.S.points > 2500) eff = eff.mul((2500**1.5+(player.S.points-2500)**1.5)+1);
 		
 		
 			eff = softcap(eff,new ExpantaNum(1e9),0.85)
