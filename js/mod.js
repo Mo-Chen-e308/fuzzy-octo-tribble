@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.1",
+	num: "0.0.2",
 	name: "",
 }
 
@@ -42,10 +42,18 @@ function getPointGen() {
 	if(hasUpgrade("p",12)) eff=eff.mul(upgradeEffect("p",12))
 	if(hasUpgrade("p",13)) eff=eff.mul(upgradeEffect("p",13))
 	if(hasUpgrade("p",21)) eff=eff.mul(upgradeEffect("p",21))
-	eff=eff.mul(layers.p.clickables[11].gain())
-	eff=eff.mul(player.g.points.add(1).pow(2))
+	eff=eff.pow(layers.p.clickables[11].gain())
+	hasUpgrade("g",13)?hasMilestone("g",3)?eff=eff.mul(player.g.total.pow(2).mul(2).max(1)):eff=eff.mul(player.g.total.pow(2).max(1)):eff=eff.mul(player.g.total.mul(3).max(1))
+	if(hasUpgrade("g",12)) eff=eff.mul(upgradeEffect("g",12))
+	if(hasChallenge("g",11))eff=eff.mul(50)
+	if(hasUpgrade("g",23)) eff=eff.mul(upgradeEffect("g",23))
+	if(hasUpgrade("g",25)) eff=eff.mul(upgradeEffect("g",25))
+	if(hasMilestone("g",3))eff=eff.pow(1.05)
+	if(hasChallenge("g",12))eff=eff.mul(10)
 
-
+	if(inChallenge("g",11))eff=eff.pow(0.25)
+	if(inChallenge("g",12))eff=eff.pow(0.15)
+	
 	return eff
 }
 
